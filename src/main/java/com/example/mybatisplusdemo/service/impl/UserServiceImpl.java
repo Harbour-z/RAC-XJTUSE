@@ -30,7 +30,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     @Override
     public List<User> listByKey(String key) {
         LambdaQueryWrapper<User> wrapper =new LambdaQueryWrapper<>();
-        wrapper.like(User::getLoginName,key);
+        wrapper.like(User::getUsername,key);
         //userMapper.selectList(wrapper);
         return userMapper.selectList(wrapper);
     }
@@ -38,7 +38,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     @Override
     public User login(User user) {
         LambdaQueryWrapper<User> wrapper =new LambdaQueryWrapper<>();
-        wrapper.eq(User::getLoginName,user.getLoginName()).eq(User::getPassword,user.getPassword());
+        wrapper.eq(User::getUsername,user.getUsername()).eq(User::getPassword,user.getPassword());
         //登录用户存进Session
         User one = userMapper.selectOne(wrapper);
         SessionUtils.saveCurrentUserInfo(one);

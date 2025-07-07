@@ -14,27 +14,18 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
-/**
- * <p>
- * 
- * </p>
- *
- * @author hxy
- * @since 2025-06-17
- */
 @Data
 @EqualsAndHashCode(callSuper = false)
-@TableName("user")
-@ApiModel(value="User对象", description="")
+@TableName("merchant")
+@ApiModel(value="Merchant对象", description="")
 @Accessors(chain = true)
-public class User implements Serializable {
-
+public class Merchant implements Serializable{
     private static final long serialVersionUID = 1L;
 
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
-        @ApiModelProperty(value = "用户名")
+    @ApiModelProperty(value = "用户名")
     @TableField("username")
     private String username;
 
