@@ -3,6 +3,7 @@ package com.example.mybatisplusdemo.web.controller;
 import com.example.mybatisplusdemo.common.Result;
 import com.example.mybatisplusdemo.common.utls.SessionUtils;
 import com.example.mybatisplusdemo.mapper.UserMapper;
+import com.example.mybatisplusdemo.model.dto.LoginDTO;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,27 +36,7 @@ public class UserController {
     @Autowired
     private UserMapper userMapper;
 
-//    @GetMapping("getdemo1")
-//    public String s(Long id,String name) {
-//        System.out.println(id);
-//        System.out.println(name);
-//        return name;
-//    }
-//
-//    //建立DTO扩展属性
-//    @GetMapping("getdemo2")
-//    public String s2(UserDTO userDTO) {
-//        System.out.println(userDTO.getId());
-//        System.out.println(userDTO.getName());
-//        return "hello";
-//    }
-//
-//    @GetMapping("getdemo3/{id}/{name}")
-//    public String s3(@PathVariable("id") long id) {
-//        User user = userService.getById(id);
-//        System.out.println(user.getLoginName());
-//        return user.getLoginName();
-//    }
+
 
     //json数据（前后端分离必备的参数请求类型）
     //必须用对象接取参数，前段参数名匹配对象属性名
@@ -65,12 +46,6 @@ public class UserController {
         return Result.success(user);
     }
 
-    //对比老师的
-//    @GetMapping("listPage")
-//    public Result listPage(PageDTO pageDTO, User user) {
-//        Page<User> page = userService.listPage(pageDTO,user);
-//        return Result.success(page);
-//    }等基础框架清楚了再具体定义
 
     @GetMapping("listByKey")
     public Result listByKey(String key){
@@ -78,10 +53,10 @@ public class UserController {
         return Result.success(userList);
     }
 
-    @PostMapping("login")
-    public Result login(@RequestBody User user){
-        User login = userService.login(user);
-        return Result.success(login);
+    @PostMapping("/login")
+    public Result<User> login(@RequestBody LoginDTO loginDTO) {
+        User user = userService.login(loginDTO);
+        return Result.success(user);
     }
 
     @GetMapping("getInfo")

@@ -1,11 +1,10 @@
 package com.example.mybatisplusdemo.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.mybatisplusdemo.common.utls.SessionUtils;
 import com.example.mybatisplusdemo.model.domain.User;
 import com.example.mybatisplusdemo.mapper.UserMapper;
-import com.example.mybatisplusdemo.model.dto.PageDTO;
+import com.example.mybatisplusdemo.model.dto.LoginDTO;
 import com.example.mybatisplusdemo.service.IUserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,16 +35,16 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     }
 
     @Override
-    public User login(User user) {
-        LambdaQueryWrapper<User> wrapper =new LambdaQueryWrapper<>();
-        wrapper.eq(User::getUsername,user.getUsername()).eq(User::getPassword,user.getPassword());
+    public User login(LoginDTO loginDTO) {
+        User user = userMapper.selectByAccountAndPassword(
+                loginDTO.getAccount(),
+                loginDTO.getPassword()
+        );
+        if (user == null) {
+            throw new RuntimeException("用户名或密码错误");
+        }
         //登录用户存进Session
-        User one = userMapper.selectOne(wrapper);
-        SessionUtils.saveCurrentUserInfo(one);
-        return one;
+        SessionUtils.saveCurrentUserInfo(user);
+        return user;
     }
-
-
-
-
 }

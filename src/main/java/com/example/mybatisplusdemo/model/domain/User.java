@@ -40,4 +40,10 @@ public class User implements Serializable {
 
     @TableField("password")
     private String password;
+
+    @TableField("phone")
+    private String phone;
+
+    @TableField("email")
+    private String email;
 }

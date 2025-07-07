@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.example.mybatisplusdemo.common.utls.SessionUtils;
 import com.example.mybatisplusdemo.model.domain.Merchant;
 import com.example.mybatisplusdemo.mapper.MerchantMapper;
+import com.example.mybatisplusdemo.model.domain.User;
+import com.example.mybatisplusdemo.model.dto.LoginDTO;
 import com.example.mybatisplusdemo.service.IMerchantService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
@@ -27,12 +29,16 @@ public class MerchantServiceImpl extends ServiceImpl<MerchantMapper, Merchant> i
 
 
     @Override
-    public Merchant login(Merchant  merchant) {
-        LambdaQueryWrapper<Merchant> wrapper =new LambdaQueryWrapper<>();
-        wrapper.eq(Merchant::getUsername,merchant.getUsername()).eq(Merchant::getPassword,merchant.getPassword());
+    public Merchant login(LoginDTO loginDTO) {
+        Merchant merchant = merchantMapper.selectByAccountAndPassword(
+                loginDTO.getAccount(),
+                loginDTO.getPassword()
+        );
+        if (merchant == null) {
+            throw new RuntimeException("用户名或密码错误");
+        }
         //登录用户存进Session
-        Merchant one = merchantMapper.selectOne(wrapper);
-        SessionUtils.saveCurrentMerchantInfo(one);
-        return one;
+        SessionUtils.saveCurrentMerchantInfo(merchant);
+        return merchant;
     }
 }

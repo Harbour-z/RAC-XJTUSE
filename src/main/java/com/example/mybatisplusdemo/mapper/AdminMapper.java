@@ -2,6 +2,7 @@ package com.example.mybatisplusdemo.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.example.mybatisplusdemo.model.domain.Admin;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * <p>
@@ -13,4 +14,8 @@ import com.example.mybatisplusdemo.model.domain.Admin;
  */
 public interface AdminMapper extends BaseMapper<Admin> {
 
+    Admin selectByAccountAndPassword(
+            @Param("account") String account,
+            @Param("password") String password
+    );
 }

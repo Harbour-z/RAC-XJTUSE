@@ -16,6 +16,11 @@ import org.apache.ibatis.annotations.Param;
  * @since 2025-06-17
  */
 public interface UserMapper extends BaseMapper<User> {
+    User selectCurUser(@Param("user") User user);
 
+    User selectByAccountAndPassword(
+            @Param("account") String account,
+            @Param("password") String password
+    );
     //传递参数取别名
 }

@@ -37,8 +37,8 @@ public class Admin implements Serializable {
     @TableField("password")
     private String password;
 
-    @TableField("phoneNumber")
-    private String phoneNumber;
+    @TableField("phone")
+    private String phone;
 
     @TableField("email")
     private String email;

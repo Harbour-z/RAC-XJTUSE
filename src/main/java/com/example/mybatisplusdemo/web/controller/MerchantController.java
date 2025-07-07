@@ -1,6 +1,8 @@
 package com.example.mybatisplusdemo.web.controller;
 
 import com.example.mybatisplusdemo.mapper.UserMapper;
+import com.example.mybatisplusdemo.model.domain.User;
+import com.example.mybatisplusdemo.model.dto.LoginDTO;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,7 +26,7 @@ import com.example.mybatisplusdemo.model.domain.Merchant;
 @RequestMapping("/api/merchant")
 public class MerchantController {
 
-    private final Logger logger = LoggerFactory.getLogger( MerchantController.class );
+    private final Logger logger = LoggerFactory.getLogger(MerchantController.class);
 
     @Autowired
     private IMerchantService merchantService;
@@ -32,20 +34,19 @@ public class MerchantController {
     private UserMapper userMapper;
 
     /**
-    * 描述：根据Id 查询
-    *
-    */
+     * 描述：根据Id 查询
+     */
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     @ResponseBody
-    public Result<Merchant> getById(@PathVariable("id") Long id)throws Exception {
+    public Result<Merchant> getById(@PathVariable("id") Long id) throws Exception {
         Merchant merchant = merchantService.getById(id);
         return Result.success(merchant);
     }
 
-    @PostMapping("login")
-    public Result login(@RequestBody Merchant merchant) throws Exception {
-        Merchant login = merchantService.login(merchant);
-        return Result.success(login);
+    @PostMapping("/login")
+    public Result<Merchant> login(@RequestBody LoginDTO loginDTO) {
+        Merchant merchant = merchantService.login(loginDTO);
+        return Result.success(merchant);
     }
 }
 

@@ -14,8 +14,17 @@
         <result column="gmt_modified" property="gmtModified" />
         <result column="avater" property="avater"/>
     </resultMap>
+    <select id="selectCurUser" resultType="com.example.mybatisplusdemo.model.domain.User">
 
-<!--    <resultMap id="withOrders" type="com.example.mybatisplusdemo.model.vo.UserVO" extends="BaseResultMap">-->
+    </select>
+    <select id="selectByAccountAndPassword" resultType="com.example.mybatisplusdemo.model.domain.User">
+        SELECT * FROM user
+        WHERE
+            (username = #{account} OR phone = #{account} OR email = #{account})
+          AND password = #{password}
+    </select>
+
+    <!--    <resultMap id="withOrders" type="com.example.mybatisplusdemo.model.vo.UserVO" extends="BaseResultMap">-->
 <!--        <collection property="orders" ofType="com.example.mybatisplusdemo.model.domain.Orders">-->
 <!--            <id column="oid" property="id" />-->
 <!--            <result column="name" property="name" />-->

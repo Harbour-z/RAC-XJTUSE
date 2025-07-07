@@ -2,6 +2,7 @@ package com.example.mybatisplusdemo.service;
 
 import com.example.mybatisplusdemo.model.domain.Admin;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.example.mybatisplusdemo.model.dto.LoginDTO;
 
 /**
  * <p>
@@ -13,5 +14,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IAdminService extends IService<Admin> {
 
-    Admin login(Admin admin);
+    Admin login(LoginDTO loginDTO);
 }

@@ -1,6 +1,7 @@
 package com.example.mybatisplusdemo.web.controller;
 
 import com.example.mybatisplusdemo.model.domain.Merchant;
+import com.example.mybatisplusdemo.model.dto.LoginDTO;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,10 +42,10 @@ public class AdminController {
         return Result.success(admin);
     }
 
-    @PostMapping("login")
-    public Result login(@RequestBody Admin admin) throws Exception {
-        Admin login = adminService.login(admin);
-        return Result.success(login);
+    @PostMapping("/login")
+    public Result<Admin> login(@RequestBody LoginDTO loginDTO) {
+        Admin admin  = adminService.login(loginDTO);
+        return Result.success(admin);
     }
 }
 
