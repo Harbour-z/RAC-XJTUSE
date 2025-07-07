@@ -68,11 +68,11 @@ public class UserController {
     }
 
     //对比老师的
-    @GetMapping("listPage")
-    public Result listPage(PageDTO pageDTO, User user) {
-        Page<User> page = userService.listPage(pageDTO,user);
-        return Result.success(page);
-    }
+//    @GetMapping("listPage")
+//    public Result listPage(PageDTO pageDTO, User user) {
+//        Page<User> page = userService.listPage(pageDTO,user);
+//        return Result.success(page);
+//    }等基础框架清楚了再具体定义
 
     @GetMapping("listByKey")
     public Result listByKey(String key){

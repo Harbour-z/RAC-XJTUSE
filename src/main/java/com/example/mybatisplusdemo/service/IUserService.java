@@ -21,5 +21,5 @@ public interface IUserService extends IService<User> {
 
     User login(User user);
 
-    Page<User> listPage(PageDTO pageDTO, User user);
+//    Page<User> listPage(PageDTO pageDTO, User user);等基础框架清楚了再具体定义
 }
