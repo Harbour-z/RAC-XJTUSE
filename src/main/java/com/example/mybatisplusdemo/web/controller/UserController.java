@@ -1,8 +1,6 @@
-package com.example.mybatisplusdemo.controller;
+package com.example.mybatisplusdemo.web.controller;
 
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.mybatisplusdemo.common.Result;
-import com.example.mybatisplusdemo.model.dto.PageDTO;
 import com.example.mybatisplusdemo.common.utls.SessionUtils;
 import com.example.mybatisplusdemo.mapper.UserMapper;
 import org.springframework.web.bind.annotation.RequestMapping;

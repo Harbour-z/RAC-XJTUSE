@@ -1,4 +1,4 @@
-package com.example.mybatisplusdemo.controller;
+package com.example.mybatisplusdemo.web.controller;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.slf4j.Logger;

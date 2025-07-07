@@ -1,4 +1,4 @@
-package com.example.mybatisplusdemo.controller;
+package com.example.mybatisplusdemo.web.controller;
 
 import com.example.mybatisplusdemo.assistant.Assistant;
 import com.example.mybatisplusdemo.common.Result;
