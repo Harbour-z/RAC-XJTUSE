@@ -1,8 +1,7 @@
-package com.example.mybatisplusdemo.web.controller;
+package com.example.mybatisplusdemo.controller;
 
-import ch.qos.logback.classic.spi.EventArgUtil;
 import com.example.mybatisplusdemo.assistant.Assistant;
-import com.example.mybatisplusdemo.common.JsonResponse;
+import com.example.mybatisplusdemo.common.Result;
 import dev.langchain4j.model.chat.ChatLanguageModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,8 +17,8 @@ public class AiCintroller {
     private Assistant assistant;
 
     @GetMapping("chat1")
-    public JsonResponse chat(String msg) {
+    public Result chat(String msg) {
         String chat = assistant.chat(msg);
-        return JsonResponse.success(chat);
+        return Result.success(chat);
     }
 }

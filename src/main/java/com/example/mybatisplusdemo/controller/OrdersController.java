@@ -1,11 +1,11 @@
-package com.example.mybatisplusdemo.web.controller;
+package com.example.mybatisplusdemo.controller;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import com.example.mybatisplusdemo.common.JsonResponse;
+import com.example.mybatisplusdemo.common.Result;
 import com.example.mybatisplusdemo.service.IOrdersService;
 import com.example.mybatisplusdemo.model.domain.Orders;
 
@@ -31,9 +31,9 @@ public class OrdersController {
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
 
     @ResponseBody
-    public JsonResponse<Orders> getById(@PathVariable("id") Long id)throws Exception {
+    public Result<Orders> getById(@PathVariable("id") Long id)throws Exception {
         Orders orders = ordersService.getById(id);
-        return JsonResponse.success(orders);
+        return Result.success(orders);
     }
 }
 

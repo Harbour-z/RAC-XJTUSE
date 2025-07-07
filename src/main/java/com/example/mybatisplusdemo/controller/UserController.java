@@ -1,6 +1,7 @@
-package com.example.mybatisplusdemo.web.controller;
+package com.example.mybatisplusdemo.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.example.mybatisplusdemo.common.Result;
 import com.example.mybatisplusdemo.model.dto.PageDTO;
 import com.example.mybatisplusdemo.common.utls.SessionUtils;
 import com.example.mybatisplusdemo.mapper.UserMapper;
@@ -9,7 +10,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import com.example.mybatisplusdemo.common.JsonResponse;
 import com.example.mybatisplusdemo.service.IUserService;
 import com.example.mybatisplusdemo.model.domain.User;
 
@@ -62,52 +62,52 @@ public class UserController {
     //json数据（前后端分离必备的参数请求类型）
     //必须用对象接取参数，前段参数名匹配对象属性名
     @PostMapping("postdemo1")
-    public JsonResponse s4(@RequestBody User user){
+    public Result s4(@RequestBody User user){
         System.out.println(user);
-        return JsonResponse.success(user);
+        return Result.success(user);
     }
 
     //对比老师的
     @GetMapping("listPage")
-    public JsonResponse listPage(PageDTO pageDTO,User user) {
+    public Result listPage(PageDTO pageDTO, User user) {
         Page<User> page = userService.listPage(pageDTO,user);
-        return JsonResponse.success(page);
+        return Result.success(page);
     }
 
     @GetMapping("listByKey")
-    public JsonResponse listByKey(String key){
+    public Result listByKey(String key){
         List<User> userList = userService.listByKey(key);
-        return JsonResponse.success(userList);
+        return Result.success(userList);
     }
 
     @PostMapping("login")
-    public JsonResponse login(@RequestBody User user){
+    public Result login(@RequestBody User user){
         User login = userService.login(user);
-        return JsonResponse.success(login);
+        return Result.success(login);
     }
 
     @GetMapping("getInfo")
-    public JsonResponse getInfo(){
+    public Result getInfo(){
         User user = SessionUtils.getCurrentUserInfo();
-        return JsonResponse.success(user);
+        return Result.success(user);
     }
 
     @PostMapping("deleteUser")
-    public JsonResponse<Boolean> deleteUser(@RequestBody User user) {
+    public Result<Boolean> deleteUser(@RequestBody User user) {
         boolean success = userService.removeById(user.getId());
-        return JsonResponse.success(success);
+        return Result.success(success);
     }
 
     @GetMapping("removeUser")
-    public JsonResponse removeUser(Long id){
+    public Result removeUser(Long id){
         boolean b = userService.removeById(id);
-        return JsonResponse.success(b);
+        return Result.success(b);
     }
 
     @PostMapping("updateUser")
-    public JsonResponse updateUser(@RequestBody User user){
+    public Result updateUser(@RequestBody User user){
         boolean b = userService.updateById(user);
-        return JsonResponse.success(b);
+        return Result.success(b);
     }
 }
 
