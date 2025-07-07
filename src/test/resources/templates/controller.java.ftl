@@ -35,9 +35,10 @@ public class ${table.controllerName} {
     */
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     @ResponseBody
-    public JsonResponse<${entity}> getById(@PathVariable("id") Long id)throws Exception {
+    public Result<${entity}> getById(@PathVariable("id") Long id)throws
+Exception {
         ${entity} ${entity?uncap_first} = ${entity?uncap_first}Service.getById(id);
-        return JsonResponse.success(${entity?uncap_first});
+        return Result.success(${entity?uncap_first});
     }
 }
 
