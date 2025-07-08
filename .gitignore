@@ -31,3 +31,8 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### 配置文件忽略 ###
+application-dev.yml
+application-private.yml
+application-local.yml
