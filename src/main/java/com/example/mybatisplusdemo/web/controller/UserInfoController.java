@@ -35,7 +35,6 @@ public class UserInfoController {
 
     @Autowired
     private IUserInfoService userInfoService;
-
     //json数据（前后端分离必备的参数请求类型）
     //必须用对象接取参数，前段参数名匹配对象属性名
     @PostMapping("postdemo1")
