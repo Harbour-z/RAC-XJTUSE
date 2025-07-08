@@ -77,7 +77,7 @@ public class MerchantInfoController {
     }
 
     //商家注册店铺
-//    @PostMapping("/register")
+//    @PostMapping("/registerShop")
 //    public Result<UserInfo> newMerchant(@RequestBody RegisterDTO registerDTO){
 //        if(registerDTO.getUsername()=="" || registerDTO.getPassword()==""){
 //            return Result.failure("用户名或密码不能为空！");
