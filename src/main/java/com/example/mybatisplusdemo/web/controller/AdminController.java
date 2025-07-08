@@ -1,6 +1,5 @@
 package com.example.mybatisplusdemo.web.controller;
 
-import com.example.mybatisplusdemo.model.domain.Merchant;
 import com.example.mybatisplusdemo.model.dto.LoginDTO;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.slf4j.Logger;
