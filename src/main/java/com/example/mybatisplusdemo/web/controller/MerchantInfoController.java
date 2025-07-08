@@ -1,6 +1,7 @@
 package com.example.mybatisplusdemo.web.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.example.mybatisplusdemo.common.utls.SessionUtils;
 import com.example.mybatisplusdemo.model.domain.UserInfo;
 import com.example.mybatisplusdemo.model.dto.LoginDTO;
 import com.example.mybatisplusdemo.model.dto.MerchantRegisterDTO;
@@ -43,6 +44,13 @@ public class MerchantInfoController {
     public Result<MerchantInfo> getById(int id) throws Exception {
         MerchantInfo merchant = merchantInfoService.getById(id);
         return Result.success(merchant);
+    }
+
+    //商家页面显示自己账户
+    @GetMapping("getInfoMy")
+    public Result getInfo(){
+        UserInfo user = SessionUtils.getCurrentMerchantInfo();
+        return Result.success(user);
     }
     //登录商家
     @PostMapping("/login")
