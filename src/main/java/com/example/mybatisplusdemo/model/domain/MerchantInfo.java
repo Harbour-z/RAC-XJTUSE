@@ -31,7 +31,7 @@ public class MerchantInfo implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-        @ApiModelProperty(value = "商户ID")
+        @ApiModelProperty(value = "商家个人ID")
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
@@ -49,6 +49,10 @@ public class MerchantInfo implements Serializable {
         @ApiModelProperty(value = "联系方式")
     @TableField("phone")
     private String phone;
+
+        @ApiModelProperty(value = "用户头像")
+    @TableField("avatar")
+    private String avatar;
 
     @TableField("is_deleted")
         @TableLogic

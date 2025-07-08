@@ -1,5 +1,6 @@
 package com.example.mybatisplusdemo.web.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.example.mybatisplusdemo.common.utls.SessionUtils;
 import com.example.mybatisplusdemo.model.dto.LoginDTO;
 import com.example.mybatisplusdemo.model.dto.RegisterDTO;
@@ -59,6 +60,15 @@ public class UserInfoController {
         if(registerDTO.getUsername()==null || registerDTO.getPassword()==null){
             return Result.failure("缺少用户信息！");
         }
+
+        QueryWrapper<UserInfo> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("username",registerDTO.getUsername());
+        if(userInfoService.getOne(queryWrapper)!=null){
+            Result res = Result.failure("用户名不能重复注册！");
+            res.setCode(100);
+            return res;
+        }
+
         UserInfo user = new UserInfo();
         BeanUtils.copyProperties(registerDTO,user);
         boolean res = userInfoService.save(user);
