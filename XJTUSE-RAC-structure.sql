@@ -5,7 +5,7 @@ USE `XJTUSE_RAC` ;
 DROP TABLE IF EXISTS user_info;
 CREATE TABLE user_info(
     `id` bigint unsigned NOT NULL AUTO_INCREMENT COMMENT '用户id' ,
-    `username` VARCHAR(64) NOT NULL  COMMENT '登录名称' ,
+    `username` VARCHAR(64) NOT NULL UNIQUE COMMENT '登录名称' ,
     `password` VARCHAR(128) NOT NULL  COMMENT '登录密码' ,
     `phone` VARCHAR(20)   COMMENT '用户手机号' ,
     `user_gender` tinyint unsigned   COMMENT '用户性别;1为男 2为女 0-未知' ,
@@ -24,7 +24,7 @@ CREATE TABLE user_info(
 DROP TABLE IF EXISTS admin_info;
 CREATE TABLE admin_info(
     `id` bigint unsigned NOT NULL AUTO_INCREMENT COMMENT '管理员ID' ,
-    `username` VARCHAR(50) NOT NULL  COMMENT '管理员账号' ,
+    `username` VARCHAR(50) NOT NULL UNIQUE COMMENT '管理员账号' ,
     `password` VARCHAR(255) NOT NULL  COMMENT '密码' ,
     `avatar` VARCHAR(255)   COMMENT '管理员头像;头像资源URL' ,
     `create_time` DATETIME   COMMENT '' ,
@@ -51,7 +51,7 @@ DROP TABLE IF EXISTS merchant_category;
 CREATE TABLE merchant_category(
     `id` bigint unsigned NOT NULL AUTO_INCREMENT COMMENT '' ,
     `parent_id` INT   COMMENT '父分类ID(若为0则其自身为一个父分类)' ,
-    `name` VARCHAR(50)   COMMENT '分类名称' ,
+    `name` VARCHAR(50)  UNIQUE COMMENT '分类名称' ,
     `icon` VARCHAR(255)   COMMENT '分类图标url' ,
     `is_deleted` tinyint unsigned NOT NULL DEFAULT 0 COMMENT '状态(0-启用, 1-禁用)' ,
     `create_time` DATETIME   COMMENT '' ,
@@ -59,16 +59,12 @@ CREATE TABLE merchant_category(
     PRIMARY KEY (id)
 )  COMMENT = '商家分类表';
 
-DROP TABLE IF EXISTS merchant_info;
-CREATE TABLE merchant_info(
+DROP TABLE IF EXISTS shop;
+CREATE TABLE shop(
     `id` bigint unsigned NOT NULL AUTO_INCREMENT COMMENT '商户ID' ,
-    `username` VARCHAR(64) NOT NULL  COMMENT '用户名' ,
-    `password` VARCHAR(255) NOT NULL  COMMENT '密码' ,
-    `email` VARCHAR(255)   COMMENT '' ,
-    `phone` VARCHAR(20)   COMMENT '联系方式' ,
     `category_id` INT   COMMENT '店铺分类' ,
     `address` VARCHAR(255)   COMMENT '店铺地址' ,
-    `merchant_name` VARCHAR(64)   COMMENT '店铺名称' ,
+    `merchant_name` VARCHAR(64) COMMENT '店铺名称' ,
     `logitude` DECIMAL   COMMENT '经度' ,
     `latitude` DECIMAL   COMMENT '纬度' ,
     `avg_rating` DECIMAL   COMMENT '平均评分' ,
@@ -80,7 +76,21 @@ CREATE TABLE merchant_info(
     `price_range` VARCHAR(255)   COMMENT '价格区间' ,
     `tag` VARCHAR(255)   COMMENT '商家标签' ,
     PRIMARY KEY (id)
-)  COMMENT = '商家信息表';
+)  COMMENT = '店铺信息表';
+
+DROP TABLE IF EXISTS merchant_info;
+CREATE TABLE merchant_info(
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT COMMENT '个人ID' ,
+  `username` VARCHAR(64) NOT NULL UNIQUE COMMENT '用户名' ,
+  `password` VARCHAR(255) NOT NULL  COMMENT '密码' ,
+  `email` VARCHAR(255)   COMMENT '' ,
+  `phone` VARCHAR(20)   COMMENT '联系方式' ,
+  `avatar` VARCHAR(255)   COMMENT '用户头像;头像资源地址' ,
+  `is_deleted` tinyint unsigned NOT NULL DEFAULT 0 COMMENT '' ,
+  `create_time` DATETIME   COMMENT '' ,
+  `update_time` DATETIME   COMMENT '' ,
+  PRIMARY KEY (id)
+)  COMMENT = '商家用户信息表';
 
 DROP TABLE IF EXISTS merchant_qulification;
 CREATE TABLE merchant_qulification(
@@ -202,4 +212,3 @@ CREATE TABLE admin_audit_log(
     `is_deleted` tinyint unsigned NOT NULL DEFAULT 0 COMMENT '' ,
     PRIMARY KEY (id)
 )  COMMENT = '审核日志表';
-

@@ -50,38 +50,6 @@ public class MerchantInfo implements Serializable {
     @TableField("phone")
     private String phone;
 
-        @ApiModelProperty(value = "店铺分类")
-    @TableField("category_id")
-    private Integer categoryId;
-
-        @ApiModelProperty(value = "店铺地址")
-    @TableField("address")
-    private String address;
-
-        @ApiModelProperty(value = "店铺名称")
-    @TableField("merchant_name")
-    private String merchantName;
-
-        @ApiModelProperty(value = "经度")
-    @TableField("logitude")
-    private Long logitude;
-
-        @ApiModelProperty(value = "纬度")
-    @TableField("latitude")
-    private Long latitude;
-
-        @ApiModelProperty(value = "平均评分")
-    @TableField("avg_rating")
-    private Long avgRating;
-
-        @ApiModelProperty(value = "店铺简介")
-    @TableField("description")
-    private String description;
-
-        @ApiModelProperty(value = "封面URL")
-    @TableField("cover")
-    private String cover;
-
     @TableField("is_deleted")
         @TableLogic
     private Byte isDeleted;
@@ -91,14 +59,5 @@ public class MerchantInfo implements Serializable {
 
     @TableField("update_time")
     private LocalDateTime updateTime;
-
-        @ApiModelProperty(value = "价格区间")
-    @TableField("price_range")
-    private String priceRange;
-
-        @ApiModelProperty(value = "商家标签")
-    @TableField("tag")
-    private String tag;
-
 
 }
