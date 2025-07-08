@@ -85,6 +85,7 @@ CREATE TABLE merchant_info(
   `password` VARCHAR(255) NOT NULL  COMMENT '密码' ,
   `email` VARCHAR(255)   COMMENT '' ,
   `phone` VARCHAR(20)   COMMENT '联系方式' ,
+  `avatar` VARCHAR(255)   COMMENT '用户头像;头像资源地址' ,
   `is_deleted` tinyint unsigned NOT NULL DEFAULT 0 COMMENT '' ,
   `create_time` DATETIME   COMMENT '' ,
   `update_time` DATETIME   COMMENT '' ,
