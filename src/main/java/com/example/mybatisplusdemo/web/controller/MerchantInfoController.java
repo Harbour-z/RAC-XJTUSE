@@ -1,6 +1,9 @@
 package com.example.mybatisplusdemo.web.controller;
 
+import com.example.mybatisplusdemo.model.domain.UserInfo;
 import com.example.mybatisplusdemo.model.dto.LoginDTO;
+import com.example.mybatisplusdemo.model.dto.RegisterDTO;
+import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,5 +46,21 @@ public class MerchantInfoController {
         MerchantInfo merchant = merchantInfoService.login(loginDTO);
         return Result.success(merchant);
     }
+
+    //商家注册店铺
+//    @PostMapping("/register")
+//    public Result<UserInfo> newMerchant(@RequestBody RegisterDTO registerDTO){
+//        if(registerDTO.getUsername()=="" || registerDTO.getPassword()==""){
+//            return Result.failure("用户名或密码不能为空！");
+//        }
+//        if(registerDTO.getUsername()==null || registerDTO.getPassword()==null){
+//            return Result.failure("缺少用户信息！");
+//        }
+//        UserInfo user = new UserInfo();
+//        BeanUtils.copyProperties(registerDTO,user);
+//        boolean res = userInfoService.save(user);
+//        log.info("res:{}",res);
+//        return res ?Result.success(user):Result.failure("注册失败");
+//    }
 }
 
