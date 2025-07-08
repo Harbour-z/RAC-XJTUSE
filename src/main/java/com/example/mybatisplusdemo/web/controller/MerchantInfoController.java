@@ -32,13 +32,12 @@ public class MerchantInfoController {
     * 描述：根据Id 查询
     *
     */
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    @ResponseBody
-    public Result<MerchantInfo> getById(@PathVariable("id") Long id) throws Exception {
+    @GetMapping("/getInfo")
+    public Result<MerchantInfo> getById(int id) throws Exception {
         MerchantInfo merchant = merchantInfoService.getById(id);
         return Result.success(merchant);
     }
-
+    //登录商家
     @PostMapping("/login")
     public Result<MerchantInfo> login(@RequestBody LoginDTO loginDTO) {
         MerchantInfo merchant = merchantInfoService.login(loginDTO);
