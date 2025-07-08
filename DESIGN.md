@@ -22,3 +22,6 @@ java中：
 ### Service层命名规约
 
 接口以I开头+业务名称+功能，接口实现类置于Service包下的Impl包中，具体实现类的类名结尾需添加 `Impl`。
+
+### 关于Result的code的约定含义
+code：100表示出现注册重复

@@ -16,7 +16,7 @@ import lombok.experimental.Accessors;
 
 /**
  * <p>
- * 店铺信息表
+ * 商家信息表
  * </p>
  *
  * @author hxy
