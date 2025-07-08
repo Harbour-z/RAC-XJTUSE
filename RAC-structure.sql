@@ -69,7 +69,7 @@ CREATE TABLE merchant_info(
     `address` VARCHAR(255) NOT NULL  COMMENT '店铺地址' ,
     `merchant_name` VARCHAR(64) NOT NULL  COMMENT '店铺名称' ,
     `logitude` DECIMAL   COMMENT '经度' ,
-    `latitude` DATETIME   COMMENT '纬度' ,
+    `latitude` DECIMAL   COMMENT '纬度' ,
     `avg_rating` DECIMAL   COMMENT '平均评分' ,
     `description` VARCHAR(255)   COMMENT '店铺简介' ,
     `cover` VARCHAR(255)   COMMENT '封面URL' ,
