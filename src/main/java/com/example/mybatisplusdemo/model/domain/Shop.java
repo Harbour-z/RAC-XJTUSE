@@ -25,30 +25,15 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@TableName("merchant_info")
-@ApiModel(value="MerchantInfo对象", description="商家信息表")
-public class MerchantInfo implements Serializable {
+@TableName("shop")
+@ApiModel(value="Shop对象", description="店铺信息表")
+public class Shop implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
         @ApiModelProperty(value = "商户ID")
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
-
-        @ApiModelProperty(value = "用户名")
-    @TableField("username")
-    private String username;
-
-        @ApiModelProperty(value = "密码")
-    @TableField("password")
-    private String password;
-
-    @TableField("email")
-    private String email;
-
-        @ApiModelProperty(value = "联系方式")
-    @TableField("phone")
-    private String phone;
 
         @ApiModelProperty(value = "店铺分类")
     @TableField("category_id")
