@@ -2,6 +2,10 @@ package com.example.mybatisplusdemo.web.controller;
 
 import com.example.mybatisplusdemo.common.utls.SessionUtils;
 import com.example.mybatisplusdemo.model.dto.LoginDTO;
+import com.example.mybatisplusdemo.model.dto.RegisterDTO;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.catalina.User;
+import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,6 +29,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/api/userInfo")
+@Slf4j
 public class UserInfoController {
     private final Logger logger = LoggerFactory.getLogger( UserInfoController.class );
 
@@ -44,6 +49,21 @@ public class UserInfoController {
     public Result listByKey(String key){
         List<UserInfo> userList = userInfoService.listByKey(key);
         return Result.success(userList);
+    }
+
+    @PostMapping("/register")
+    public Result<UserInfo> newUser(@RequestBody RegisterDTO registerDTO){
+        if(registerDTO.getUsername()=="" || registerDTO.getPassword()==""){
+            return Result.failure("用户名或密码不能为空！");
+        }
+        if(registerDTO.getUsername()==null || registerDTO.getPassword()==null){
+            return Result.failure("缺少用户信息！");
+        }
+        UserInfo user = new UserInfo();
+        BeanUtils.copyProperties(registerDTO,user);
+        boolean res = userInfoService.save(user);
+        log.info("res:{}",res);
+        return res ?Result.success(user):Result.failure("注册失败");
     }
 
     @PostMapping("/login")
