@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mybatisplusdemo.mapper.CommentMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.example.mybatisplusdemo.model.domain.Comment">
+        <id column="id" property="id" />
+        <result column="user_id" property="userId" />
+        <result column="merchant_id" property="merchantId" />
+        <result column="content" property="content" />
+        <result column="overall_rating" property="overallRating" />
+        <result column="status" property="status" />
+        <result column="reject_reason" property="rejectReason" />
+        <result column="create_time" property="createTime" />
+        <result column="update_time" property="updateTime" />
+        <result column="picture" property="picture" />
+        <result column="video" property="video" />
+        <result column="is_deleted" property="isDeleted" />
+    </resultMap>
+
+</mapper>

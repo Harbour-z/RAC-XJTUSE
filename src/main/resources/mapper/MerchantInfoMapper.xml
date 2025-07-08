@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mybatisplusdemo.mapper.MerchantInfoMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.example.mybatisplusdemo.model.domain.MerchantInfo">
+        <id column="id" property="id" />
+        <result column="username" property="username" />
+        <result column="password" property="password" />
+        <result column="email" property="email" />
+        <result column="phone" property="phone" />
+        <result column="category_id" property="categoryId" />
+        <result column="address" property="address" />
+        <result column="merchant_name" property="merchantName" />
+        <result column="logitude" property="logitude" />
+        <result column="latitude" property="latitude" />
+        <result column="avg_rating" property="avgRating" />
+        <result column="description" property="description" />
+        <result column="cover" property="cover" />
+        <result column="is_deleted" property="isDeleted" />
+        <result column="create_time" property="createTime" />
+        <result column="update_time" property="updateTime" />
+        <result column="price_range" property="priceRange" />
+        <result column="tag" property="tag" />
+    </resultMap>
+    <select id="selectByAccountAndPassword" resultType="com.example.mybatisplusdemo.model.domain.MerchantInfo">
+        SELECT * FROM merchant_info
+        WHERE
+            (username = #{account} OR phone = #{account} OR email = #{account})
+          AND password = #{password}
+    </select>
+
+</mapper>
