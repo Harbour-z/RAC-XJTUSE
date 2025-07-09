@@ -48,7 +48,7 @@ Exception {
     }
 
     @PostMapping("/register")
-    public Result<Shop> register(@RequestBody ShopDTO shopDTO){
+    public Result<Shop> registerShop(@RequestBody ShopDTO shopDTO){
         // ShopDTO中必须要有店铺名称和店铺经营者id
         log.info("shopDTO:{}",shopDTO);
         if (shopDTO.getUserId() == null || shopDTO.getMerchantName()==null){
