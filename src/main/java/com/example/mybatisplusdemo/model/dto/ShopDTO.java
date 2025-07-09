@@ -4,7 +4,7 @@ import com.example.mybatisplusdemo.model.domain.Shop;
 import lombok.Data;
 
 @Data
-public class ShopDTO extends Shop {
+public class ShopDTO {
   private Integer categoryId;
   private String address;
   private String merchantName;

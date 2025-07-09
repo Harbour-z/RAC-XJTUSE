@@ -28,8 +28,6 @@ target/
 build/
 !**/src/main/**/build/
 !**/src/test/**/build/
-/src/main/resources/*.yml
-
 
 ### VS Code ###
 .vscode/
@@ -38,4 +36,5 @@ build/
 application-dev.yml
 application-private.yml
 application-local.yml
-application.yml
+application-test.yml
+application-prod.yml
