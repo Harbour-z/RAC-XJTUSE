@@ -1,7 +1,9 @@
 package com.example.mybatisplusdemo.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.mybatisplusdemo.model.domain.MerchantInfo;
+import net.sf.jsqlparser.util.validation.metadata.NamedObject;
 import org.apache.ibatis.annotations.Param;
 
 /**
@@ -17,4 +19,6 @@ public interface MerchantInfoMapper extends BaseMapper<MerchantInfo> {
             @Param("account") String account,
             @Param("password") String password
     );
+
+    Page<MerchantInfo> listPage(@Param("page") Page<MerchantInfo> page,@Param("merchant") MerchantInfo merchant);
 }

@@ -43,6 +43,10 @@ public class MerchantInfo implements Serializable {
     @TableField("password")
     private String password;
 
+    @ApiModelProperty(value = "商户状态;0-正常 1-冻结")
+    @TableField("status")
+    private Byte status;
+
     @TableField("email")
     private String email;
 

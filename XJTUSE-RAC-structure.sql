@@ -17,7 +17,6 @@ CREATE TABLE user_info(
     `birthday` DATETIME   COMMENT '用户生日' ,
     `signature` VARCHAR(255)   COMMENT '个性签名' ,
     `email` VARCHAR(128)   COMMENT '用户邮箱' ,
-    `status` tinyint unsigned comment '用户状态',
     `profile_visible` tinyint unsigned   COMMENT '用户资料可见性' ,
     `favorite_visible` tinyint unsigned   COMMENT '收藏是否可见' ,
     PRIMARY KEY (id)
@@ -86,6 +85,7 @@ CREATE TABLE merchant_info(
   `id` bigint unsigned NOT NULL AUTO_INCREMENT COMMENT '个人ID' ,
   `username` VARCHAR(64) NOT NULL UNIQUE COMMENT '用户名' ,
   `password` VARCHAR(255) NOT NULL  COMMENT '密码' ,
+  `status` tinyint unsigned NOT NULL DEFAULT 0 COMMENT '用户状态;0-正常 1-冻结' ,
   `email` VARCHAR(255)   COMMENT '' ,
   `phone` VARCHAR(20)   COMMENT '联系方式' ,
   `avatar` VARCHAR(255)   COMMENT '用户头像;头像资源地址' ,

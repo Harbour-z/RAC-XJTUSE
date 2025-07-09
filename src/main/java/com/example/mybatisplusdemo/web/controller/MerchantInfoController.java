@@ -1,10 +1,12 @@
 package com.example.mybatisplusdemo.web.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.mybatisplusdemo.common.utls.SessionUtils;
 import com.example.mybatisplusdemo.model.domain.UserInfo;
 import com.example.mybatisplusdemo.model.dto.LoginDTO;
 import com.example.mybatisplusdemo.model.dto.MerchantRegisterDTO;
+import com.example.mybatisplusdemo.model.dto.PageDTO;
 import com.example.mybatisplusdemo.model.dto.RegisterDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
@@ -126,5 +128,11 @@ public class MerchantInfoController {
         boolean success = merchantInfoService.updateById(merchant);
         return success ? Result.success(success) : Result.failure("更新失败");
     }
+    @GetMapping("listPage")
+    public Result listPage(PageDTO pageDTO, MerchantInfo merchant){
+        Page<MerchantInfo> page = merchantInfoService.listPage(pageDTO,merchant);
+        return Result.success(page);
+    }
+
 }
 
