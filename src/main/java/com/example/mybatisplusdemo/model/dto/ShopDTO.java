@@ -5,7 +5,6 @@ import lombok.Data;
 
 @Data
 public class ShopDTO {
-  private Integer categoryId;
   private String address;
   private String merchantName;
   private Long logitude;
@@ -15,5 +14,6 @@ public class ShopDTO {
   private String cover;
   private String priceRange;
   private String tag;
+  private Integer categoryId;
   private String username;
 }
