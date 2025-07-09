@@ -11,6 +11,7 @@
         <result column="user_gender" property="userGender" />
         <result column="user_avatar" property="userAvatar" />
         <result column="is_deleted" property="isDeleted" />
+        <result column="status" property="status" />
         <result column="create_time" property="createTime" />
         <result column="update_time" property="updateTime" />
         <result column="birthday" property="birthday" />
@@ -24,6 +25,15 @@
         WHERE
             (username = #{account} OR phone = #{account} OR email = #{account})
           AND password = #{password}
+    </select>
+    <select id="listPage" resultMap="BaseResultMap">
+        select * from user_info
+        <where>
+            status = #{user.status}
+            <if test="user.username != null and user.username != ''">
+                and username like '%${user.username}%'
+            </if>
+        </where>
     </select>
 
 </mapper>

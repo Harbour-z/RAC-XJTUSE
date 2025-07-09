@@ -11,6 +11,7 @@ CREATE TABLE user_info(
     `user_gender` tinyint unsigned   COMMENT '用户性别;1为男 2为女 0-未知' ,
     `user_avatar` VARCHAR(255)   COMMENT '用户头像;头像资源地址' ,
     `is_deleted` tinyint unsigned NOT NULL DEFAULT 0 COMMENT '用户状态;0-正常 1-删除' ,
+    `status` tinyint unsigned NOT NULL DEFAULT 0 COMMENT '用户状态;0-正常 1-冻结' ,
     `create_time` DATETIME   COMMENT '创建时间' ,
     `update_time` DATETIME   COMMENT '更新时间' ,
     `birthday` DATETIME   COMMENT '用户生日' ,

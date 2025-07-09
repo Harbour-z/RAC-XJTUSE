@@ -55,6 +55,10 @@ public class UserInfo implements Serializable {
     @TableField("user_avatar")
     private String userAvatar;
 
+        @ApiModelProperty(value = "用户状态;0-正常 1-冻结")
+    @TableField("status")
+    private Byte status;
+
         @ApiModelProperty(value = "用户状态;0-正常 1-删除")
     @TableField("is_deleted")
         @TableLogic

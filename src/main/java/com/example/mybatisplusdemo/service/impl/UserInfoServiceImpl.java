@@ -1,10 +1,12 @@
 package com.example.mybatisplusdemo.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.mybatisplusdemo.common.utls.SessionUtils;
 import com.example.mybatisplusdemo.model.domain.UserInfo;
 import com.example.mybatisplusdemo.mapper.UserInfoMapper;
 import com.example.mybatisplusdemo.model.dto.LoginDTO;
+import com.example.mybatisplusdemo.model.dto.PageDTO;
 import com.example.mybatisplusdemo.service.IUserInfoService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,5 +46,12 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> i
         //登录用户存进Session
         SessionUtils.saveCurrentUserInfo(user);
         return user;
+    }
+
+    @Override
+    public Page<UserInfo> listPage(PageDTO pageDTO, UserInfo user) {
+        Page<UserInfo> page = new Page<>(pageDTO.getPageNum(), pageDTO.getPageSize());
+        page = userInfoMapper.listPage(page,user);
+        return page;
     }
 }

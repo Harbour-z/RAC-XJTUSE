@@ -1,8 +1,10 @@
 package com.example.mybatisplusdemo.web.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.mybatisplusdemo.common.utls.SessionUtils;
 import com.example.mybatisplusdemo.model.dto.LoginDTO;
+import com.example.mybatisplusdemo.model.dto.PageDTO;
 import com.example.mybatisplusdemo.model.dto.RegisterDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.catalina.User;
@@ -108,6 +110,10 @@ public class UserInfoController {
         return Result.success(b);
     }
 
-    //
+    @GetMapping("listPage")
+    public Result listPage(PageDTO pageDTO, UserInfo user){
+        Page<UserInfo> page = userInfoService.listPage(pageDTO,user);
+        return Result.success(page);
+    }
 }
 

@@ -1,6 +1,7 @@
 package com.example.mybatisplusdemo.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.mybatisplusdemo.model.domain.UserInfo;
 import org.apache.ibatis.annotations.Param;
 
@@ -18,4 +19,5 @@ public interface UserInfoMapper extends BaseMapper<UserInfo> {
             @Param("password") String password
     );
 
+    Page<UserInfo> listPage(@Param("page") Page<UserInfo> page, @Param("user") UserInfo user);
 }

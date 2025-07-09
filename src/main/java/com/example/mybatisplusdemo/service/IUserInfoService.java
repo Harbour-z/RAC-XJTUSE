@@ -1,8 +1,10 @@
 package com.example.mybatisplusdemo.service;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.mybatisplusdemo.model.domain.UserInfo;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.example.mybatisplusdemo.model.dto.LoginDTO;
+import com.example.mybatisplusdemo.model.dto.PageDTO;
 
 import java.util.List;
 
@@ -18,4 +20,6 @@ public interface IUserInfoService extends IService<UserInfo> {
     List<UserInfo> listByKey(String key);
 
     UserInfo login(LoginDTO loginDTO);
+
+    Page<UserInfo> listPage(PageDTO pageDTO, UserInfo user);
 }
