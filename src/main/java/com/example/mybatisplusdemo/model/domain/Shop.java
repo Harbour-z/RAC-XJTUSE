@@ -31,7 +31,7 @@ public class Shop implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-        @ApiModelProperty(value = "商户ID")
+        @ApiModelProperty(value = "店铺ID")
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 

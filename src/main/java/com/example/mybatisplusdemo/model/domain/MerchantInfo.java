@@ -43,7 +43,7 @@ public class MerchantInfo implements Serializable {
     @TableField("password")
     private String password;
 
-    @ApiModelProperty(value = "商户状态;0-正常 1-冻结")
+    @ApiModelProperty(value = "商户状态;0-待审核 1-已通过 2-未通过")
     @TableField("status")
     private Byte status;
 
