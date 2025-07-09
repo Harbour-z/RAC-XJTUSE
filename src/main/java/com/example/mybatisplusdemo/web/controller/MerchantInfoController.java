@@ -17,6 +17,8 @@ import com.example.mybatisplusdemo.common.Result;
 import com.example.mybatisplusdemo.service.IMerchantInfoService;
 import com.example.mybatisplusdemo.model.domain.MerchantInfo;
 
+import java.time.LocalDateTime;
+
 
 /**
  *
@@ -80,25 +82,12 @@ public class MerchantInfoController {
 
         MerchantInfo merchant = new MerchantInfo();
         BeanUtils.copyProperties(registerDTO,merchant);
+        merchant.setCreateTime(LocalDateTime.now());
+        merchant.setUpdateTime(LocalDateTime.now());
         boolean res = merchantInfoService.save(merchant);
         log.info("res:{}",res);
         return res ?Result.success(merchant):Result.failure("注册失败");
     }
 
-    //商家注册店铺
-//    @PostMapping("/registerShop")
-//    public Result<UserInfo> newMerchant(@RequestBody RegisterDTO registerDTO){
-//        if(registerDTO.getUsername()=="" || registerDTO.getPassword()==""){
-//            return Result.failure("用户名或密码不能为空！");
-//        }
-//        if(registerDTO.getUsername()==null || registerDTO.getPassword()==null){
-//            return Result.failure("缺少用户信息！");
-//        }
-//        UserInfo user = new UserInfo();
-//        BeanUtils.copyProperties(registerDTO,user);
-//        boolean res = userInfoService.save(user);
-//        log.info("res:{}",res);
-//        return res ?Result.success(user):Result.failure("注册失败");
-//    }
 }
 

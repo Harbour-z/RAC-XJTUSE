@@ -15,6 +15,7 @@ import com.example.mybatisplusdemo.model.domain.Shop;
 
 import java.security.Principal;
 import java.sql.Wrapper;
+import java.time.LocalDateTime;
 
 
 /**
@@ -66,6 +67,8 @@ Exception {
         }
         Shop shop = new Shop();
         BeanUtils.copyProperties(shopDTO,shop);
+        shop.setCreateTime(LocalDateTime.now());
+        shop.setUpdateTime(LocalDateTime.now());
         boolean res = shopService.save(shop);
         return res?Result.success(shop):Result.failure("店铺创建失败");
     }
