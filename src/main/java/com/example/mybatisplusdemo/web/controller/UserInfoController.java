@@ -89,7 +89,8 @@ public class UserInfoController {
     @GetMapping("getInfo")
     public Result getInfo(){
         UserInfo user = SessionUtils.getCurrentUserInfo();
-        return Result.success(user);
+        UserInfo one = userInfoService.getOne(new QueryWrapper<UserInfo>().eq("username",user.getUsername()));
+        return Result.success(one);
     }
 
     @PostMapping("deleteUser")
@@ -114,6 +115,18 @@ public class UserInfoController {
     public Result listPage(PageDTO pageDTO, UserInfo user){
         Page<UserInfo> page = userInfoService.listPage(pageDTO,user);
         return Result.success(page);
+    }
+    // 注销账户
+    @DeleteMapping("/me/{username}")
+    public Result deleteMe(@PathVariable String username){
+        UserInfo user = userInfoService.getOne(new QueryWrapper<UserInfo>().eq("username",username));
+        if(user==null){
+            Result.failure("用户不存在");
+        }else {
+            boolean b = userInfoService.removeById(user.getId());
+            return b ? Result.successMessage("Delete user successfully!"):Result.failure("Delete user failed!");
+        }
+        return Result.failure("Delete user failed!");
     }
 }
 

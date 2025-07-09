@@ -61,7 +61,7 @@ public class Shop implements Serializable {
 
         @ApiModelProperty(value = "店铺经营者username")
     @TableField("username")
-    private Long username;
+    private String username;
 
         @ApiModelProperty(value = "店铺简介")
     @TableField("description")
