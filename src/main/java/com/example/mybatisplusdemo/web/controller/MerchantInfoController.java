@@ -89,5 +89,18 @@ public class MerchantInfoController {
         return res ?Result.success(merchant):Result.failure("注册失败");
     }
 
+    // 注销商家用户账户
+    @DeleteMapping("/deleteSelf/{username}")
+    public Result deleteMe(@PathVariable String username){
+        MerchantInfo user = merchantInfoService.getOne(new QueryWrapper<MerchantInfo>().eq("username",username));
+        if(user==null){
+            Result.failure("用户不存在");
+        }else {
+            boolean b = merchantInfoService.removeById(user.getId());
+            return b ? Result.successMessage("Delete merchant-user successfully!"):Result.failure("Delete merchant-user failed!");
+        }
+        return Result.failure("Delete merchant-user failed!");
+    }
+
 }
 

@@ -62,11 +62,11 @@ CREATE TABLE merchant_category(
 
 DROP TABLE IF EXISTS shop;
 CREATE TABLE shop(
-    `id` bigint unsigned NOT NULL AUTO_INCREMENT COMMENT '商户ID' ,
+    `id` bigint unsigned NOT NULL AUTO_INCREMENT COMMENT '店铺ID' ,
     `category_id` INT   COMMENT '店铺分类' ,
     `address` VARCHAR(255)   COMMENT '店铺地址' ,
-    `merchant_name` VARCHAR(64) COMMENT '店铺名称' ,
-    `username` bigint unsigned not null comment '店铺经营者username',
+    `merchant_name` VARCHAR(64) UNIQUE COMMENT '店铺名称' ,
+    `username` varchar(128) not null comment '店铺经营者username',
     `logitude` DECIMAL   COMMENT '经度' ,
     `latitude` DECIMAL   COMMENT '纬度' ,
     `avg_rating` DECIMAL   COMMENT '平均评分' ,

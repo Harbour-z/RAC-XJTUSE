@@ -5,7 +5,6 @@ import com.example.mybatisplusdemo.common.utls.SessionUtils;
 import com.example.mybatisplusdemo.model.dto.LoginDTO;
 import com.example.mybatisplusdemo.model.dto.RegisterDTO;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.catalina.User;
 import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.slf4j.Logger;
@@ -109,6 +108,17 @@ public class UserInfoController {
         return Result.success(b);
     }
 
-    //
+    // 注销账户
+    @DeleteMapping("/me/{username}")
+    public Result deleteMe(@PathVariable String username){
+        UserInfo user = userInfoService.getOne(new QueryWrapper<UserInfo>().eq("username",username));
+        if(user==null){
+            Result.failure("用户不存在");
+        }else {
+            boolean b = userInfoService.removeById(user.getId());
+            return b ? Result.successMessage("Delete user successfully!"):Result.failure("Delete user failed!");
+        }
+        return Result.failure("Delete user failed!");
+    }
 }
 

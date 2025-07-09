@@ -1,7 +1,9 @@
 package com.example.mybatisplusdemo.web.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.example.mybatisplusdemo.model.domain.UserInfo;
 import com.example.mybatisplusdemo.model.dto.ShopDTO;
+import com.example.mybatisplusdemo.service.IUserInfoService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,6 +38,8 @@ public class ShopController {
 
     @Autowired
     private IShopService shopService;
+    @Autowired
+    private IUserInfoService userInfoService;
 
 
     /**
@@ -60,17 +64,31 @@ Exception {
         if (shopDTO.getMerchantName().isEmpty()){
             return Result.failure("店铺名称！");
         }
-        QueryWrapper<Shop> wrapper = new QueryWrapper<>();
+        QueryWrapper<UserInfo> wrapper = new QueryWrapper<>();
         wrapper.eq("username",shopDTO.getUsername());
-        if(shopService.getOne(wrapper)==null){
+        if(userInfoService.getOne(wrapper)==null){
             return Result.failure("此用户昵称不存在");
         }
         Shop shop = new Shop();
         BeanUtils.copyProperties(shopDTO,shop);
         shop.setCreateTime(LocalDateTime.now());
         shop.setUpdateTime(LocalDateTime.now());
+        shop.setUsername(shopDTO.getUsername());
         boolean res = shopService.save(shop);
         return res?Result.success(shop):Result.failure("店铺创建失败");
+    }
+
+    // 注销店铺
+    @DeleteMapping("/deleteShop/{merchantName}")
+    public Result deleteMe(@PathVariable String merchantName){
+        Shop shop = shopService.getOne(new QueryWrapper<Shop>().eq("merchant_name",merchantName));
+        if(shop==null){
+            Result.failure("店铺不存在");
+        }else {
+            boolean b = shopService.removeById(shop.getId());
+            return b ? Result.successMessage("Delete shop successfully!"):Result.failure("Delete shop failed!");
+        }
+        return Result.failure("Delete merchant-user failed!");
     }
 }
 
