@@ -215,3 +215,4 @@ CREATE TABLE admin_audit_log(
     `is_deleted` tinyint unsigned NOT NULL DEFAULT 0 COMMENT '' ,
     PRIMARY KEY (id)
 )  COMMENT = '审核日志表';
+

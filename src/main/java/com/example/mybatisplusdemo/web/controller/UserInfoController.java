@@ -1,6 +1,7 @@
 package com.example.mybatisplusdemo.web.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.mybatisplusdemo.common.utls.SessionUtils;
 import com.example.mybatisplusdemo.model.dto.LoginDTO;
@@ -91,10 +92,14 @@ public class UserInfoController {
         return Result.success(b);
     }
 
-    @PostMapping("updateUser")
-    public Result updateUser(@RequestBody UserInfo user){
-        boolean b = userInfoService.updateById(user);
-        return Result.success(b);
+    @PatchMapping("/updateUser")
+    public Result updateUser(@RequestBody UserInfo userInfo) {
+        UserInfo existingUser = userInfoService.getById(userInfo.getId());
+        if (existingUser == null) {
+            return Result.failure("用户不存在");
+        }
+        boolean success = userInfoService.updateById(userInfo);
+        return success ? Result.success(success) : Result.failure("更新失败");
     }
 
     @GetMapping("listPage")

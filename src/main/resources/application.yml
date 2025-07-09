@@ -26,6 +26,14 @@ server:
 mybatis:
   mapper-locations: classpath:/mybatis/mapper/*.xml, classpath:/mybatis/mapper/extend/*.xml
 
+mybatis-plus:
+  global-config:
+    db-config:
+      logic-not-update-field: true  # 不更新逻辑删除字段
+  configuration:
+    # 忽略 null 值更新（需要 MyBatis Plus 3.5.0+）
+    jdbc-type-for-null: 'null'
+
 langchain4j:
   open-ai:
     chat-model:
