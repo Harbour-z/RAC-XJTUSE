@@ -29,7 +29,8 @@
     <select id="listPage" resultMap="BaseResultMap">
         select * from user_info
         <where>
-            status = #{user.status}
+            is_deleted = 0
+            and status = #{user.status}
             <if test="user.username != null and user.username != ''">
                 and username like '%${user.username}%'
             </if>

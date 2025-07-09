@@ -39,14 +39,6 @@ public class UserInfoController {
 
     @Autowired
     private IUserInfoService userInfoService;
-    //json数据（前后端分离必备的参数请求类型）
-    //必须用对象接取参数，前段参数名匹配对象属性名
-    @PostMapping("postdemo1")
-    public Result s4(@RequestBody UserInfo user){
-        System.out.println(user);
-        return Result.success(user);
-    }
-
 
     @GetMapping("listByKey")
     public Result listByKey(String key){
@@ -93,12 +85,6 @@ public class UserInfoController {
         return Result.success(one);
     }
 
-    @PostMapping("deleteUser")
-    public Result<Boolean> deleteUser(@RequestBody UserInfo user) {
-        boolean success = userInfoService.removeById(user.getId());
-        return Result.success(success);
-    }
-
     @GetMapping("removeUser")
     public Result removeUser(Long id){
         boolean b = userInfoService.removeById(id);
@@ -116,6 +102,7 @@ public class UserInfoController {
         Page<UserInfo> page = userInfoService.listPage(pageDTO,user);
         return Result.success(page);
     }
+
     // 注销账户
     @DeleteMapping("/me/{username}")
     public Result deleteMe(@PathVariable String username){
