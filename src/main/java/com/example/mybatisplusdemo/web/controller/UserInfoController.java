@@ -1,6 +1,7 @@
 package com.example.mybatisplusdemo.web.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.mybatisplusdemo.common.utls.SessionUtils;
 import com.example.mybatisplusdemo.model.dto.LoginDTO;
@@ -39,14 +40,6 @@ public class UserInfoController {
 
     @Autowired
     private IUserInfoService userInfoService;
-    //json数据（前后端分离必备的参数请求类型）
-    //必须用对象接取参数，前段参数名匹配对象属性名
-    @PostMapping("postdemo1")
-    public Result s4(@RequestBody UserInfo user){
-        System.out.println(user);
-        return Result.success(user);
-    }
-
 
     @GetMapping("listByKey")
     public Result listByKey(String key){
@@ -93,22 +86,20 @@ public class UserInfoController {
         return Result.success(one);
     }
 
-    @PostMapping("deleteUser")
-    public Result<Boolean> deleteUser(@RequestBody UserInfo user) {
-        boolean success = userInfoService.removeById(user.getId());
-        return Result.success(success);
-    }
-
     @GetMapping("removeUser")
     public Result removeUser(Long id){
         boolean b = userInfoService.removeById(id);
         return Result.success(b);
     }
 
-    @PostMapping("updateUser")
-    public Result updateUser(@RequestBody UserInfo user){
-        boolean b = userInfoService.updateById(user);
-        return Result.success(b);
+    @PatchMapping("/updateUser")
+    public Result updateUser(@RequestBody UserInfo userInfo) {
+        UserInfo existingUser = userInfoService.getById(userInfo.getId());
+        if (existingUser == null) {
+            return Result.failure("用户不存在");
+        }
+        boolean success = userInfoService.updateById(userInfo);
+        return success ? Result.success(success) : Result.failure("更新失败");
     }
 
     @GetMapping("listPage")
@@ -116,6 +107,7 @@ public class UserInfoController {
         Page<UserInfo> page = userInfoService.listPage(pageDTO,user);
         return Result.success(page);
     }
+
     // 注销账户
     @DeleteMapping("/me/{username}")
     public Result deleteMe(@PathVariable String username){

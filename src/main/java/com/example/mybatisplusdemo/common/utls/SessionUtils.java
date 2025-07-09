@@ -28,7 +28,7 @@ public class SessionUtils {
         return (MerchantInfo) session().getAttribute(MERCHANTKEY);
     }
     public static AdminInfo getCurrentAdminInfo() {
-        return (AdminInfo) session().getAttribute(ADMINKEY );
+        return (AdminInfo) session().getAttribute(ADMINKEY);
     }
 
     public static void saveCurrentUserInfo(UserInfo user) {
