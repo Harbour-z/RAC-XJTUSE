@@ -49,8 +49,9 @@ public class MerchantInfoController {
     //商家页面显示自己账户
     @GetMapping("getInfoMy")
     public Result getInfo(){
-        MerchantInfo user = SessionUtils.getCurrentMerchantInfo();
-        return Result.success(user);
+        MerchantInfo merchantInfo = SessionUtils.getCurrentMerchantInfo();
+        MerchantInfo one = merchantInfoService.getOne(new QueryWrapper<MerchantInfo>().eq("username",merchantInfo.getUsername()));
+        return Result.success(one);
     }
     //登录商家
     @PostMapping("/login")

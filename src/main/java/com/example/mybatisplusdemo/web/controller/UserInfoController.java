@@ -84,7 +84,8 @@ public class UserInfoController {
     @GetMapping("getInfo")
     public Result getInfo(){
         UserInfo user = SessionUtils.getCurrentUserInfo();
-        return Result.success(user);
+        UserInfo one = userInfoService.getOne(new QueryWrapper<UserInfo>().eq("username",user.getUsername()));
+        return Result.success(one);
     }
 
     @PostMapping("deleteUser")
