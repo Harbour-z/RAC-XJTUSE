@@ -102,5 +102,23 @@ public class MerchantInfoController {
         return Result.failure("Delete merchant-user failed!");
     }
 
+    @PatchMapping("/updateMerchant")
+    public Result updateMerchant(@RequestBody MerchantInfo merchant) {
+        MerchantInfo existingMerchant = merchantInfoService.getById(merchant.getId());
+        if (existingMerchant == null) {
+            return Result.failure("商户不存在");
+        }
+        if (merchant.getUsername() != null && !merchant.getUsername().equals(existingMerchant.getUsername())) {
+            boolean isUsernameTaken = merchantInfoService.lambdaQuery()
+                    .eq(MerchantInfo::getUsername, merchant.getUsername())
+                    .ne(MerchantInfo::getId, merchant.getId()) // 排除当前用户
+                    .count() > 0;
+            if (isUsernameTaken) {
+                return Result.failure("用户名已被占用");
+            }
+        }
+        boolean success = merchantInfoService.updateById(merchant);
+        return success ? Result.success(success) : Result.failure("更新失败");
+    }
 }
 
