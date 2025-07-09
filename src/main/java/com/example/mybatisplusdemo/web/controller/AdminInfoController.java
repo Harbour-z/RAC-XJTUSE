@@ -1,6 +1,8 @@
 package com.example.mybatisplusdemo.web.controller;
 
+import com.example.mybatisplusdemo.common.utls.SessionUtils;
 import com.example.mybatisplusdemo.model.domain.Admin;
+import com.example.mybatisplusdemo.model.domain.MerchantInfo;
 import com.example.mybatisplusdemo.model.dto.LoginDTO;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.slf4j.Logger;
@@ -46,6 +48,13 @@ public class AdminInfoController {
     public Result<AdminInfo> login(@RequestBody LoginDTO loginDTO) {
         AdminInfo admin  = adminInfoService.login(loginDTO);
         return Result.success(admin);
+    }
+
+    //获取当前管理员用户名
+    @GetMapping("getInfoMy")
+    public Result getInfo(){
+        AdminInfo user = SessionUtils.getCurrentAdminInfo();
+        return Result.success(user);
     }
 }
 

@@ -24,11 +24,11 @@ public class SessionUtils {
     public static UserInfo getCurrentUserInfo() {
         return (UserInfo) session().getAttribute(USERKEY);
     }
-    public static UserInfo getCurrentMerchantInfo() {
-        return (UserInfo) session().getAttribute(MERCHANTKEY);
+    public static MerchantInfo getCurrentMerchantInfo() {
+        return (MerchantInfo) session().getAttribute(MERCHANTKEY);
     }
-    public static UserInfo getCurrentAdminInfo() {
-        return (UserInfo) session().getAttribute(ADMINKEY );
+    public static AdminInfo getCurrentAdminInfo() {
+        return (AdminInfo) session().getAttribute(ADMINKEY );
     }
 
     public static void saveCurrentUserInfo(UserInfo user) {

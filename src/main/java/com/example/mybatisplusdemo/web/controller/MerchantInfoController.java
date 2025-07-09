@@ -49,7 +49,7 @@ public class MerchantInfoController {
     //商家页面显示自己账户
     @GetMapping("getInfoMy")
     public Result getInfo(){
-        UserInfo user = SessionUtils.getCurrentMerchantInfo();
+        MerchantInfo user = SessionUtils.getCurrentMerchantInfo();
         return Result.success(user);
     }
     //登录商家
