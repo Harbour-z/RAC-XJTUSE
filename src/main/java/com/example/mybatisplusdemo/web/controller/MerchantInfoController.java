@@ -102,6 +102,12 @@ public class MerchantInfoController {
         return Result.failure("Delete merchant-user failed!");
     }
 
+    @GetMapping("removeMerchant")
+    public Result removeMerchant(Long id){
+        boolean b = merchantInfoService.removeById(id);
+        return Result.success(b);
+    }
+
     @PatchMapping("/updateMerchant")
     public Result updateMerchant(@RequestBody MerchantInfo merchant) {
         MerchantInfo existingMerchant = merchantInfoService.getById(merchant.getId());
