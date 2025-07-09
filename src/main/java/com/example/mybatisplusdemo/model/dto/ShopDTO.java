@@ -15,5 +15,5 @@ public class ShopDTO {
   private String cover;
   private String priceRange;
   private String tag;
-  private Long userId;
+  private Long username;
 }

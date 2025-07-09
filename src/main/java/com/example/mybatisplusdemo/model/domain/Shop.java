@@ -59,9 +59,9 @@ public class Shop implements Serializable {
     @TableField("avg_rating")
     private Long avgRating;
 
-        @ApiModelProperty(value = "店铺经营者id")
-    @TableField("user_id")
-    private Long userId;
+        @ApiModelProperty(value = "店铺经营者username")
+    @TableField("username")
+    private Long username;
 
         @ApiModelProperty(value = "店铺简介")
     @TableField("description")

@@ -1,5 +1,6 @@
 package com.example.mybatisplusdemo.web.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.example.mybatisplusdemo.model.dto.ShopDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
@@ -13,6 +14,7 @@ import com.example.mybatisplusdemo.service.IShopService;
 import com.example.mybatisplusdemo.model.domain.Shop;
 
 import java.security.Principal;
+import java.sql.Wrapper;
 
 
 /**
@@ -49,13 +51,18 @@ Exception {
 
     @PostMapping("/register")
     public Result<Shop> registerShop(@RequestBody ShopDTO shopDTO){
-        // ShopDTO中必须要有店铺名称和店铺经营者id
+        // ShopDTO中必须要有店铺名称和店铺经营者username
         log.info("shopDTO:{}",shopDTO);
-        if (shopDTO.getUserId() == null || shopDTO.getMerchantName()==null){
+        if (shopDTO.getUsername() == null || shopDTO.getMerchantName()==null){
             return Result.failure("缺少必要信息！");
         }
         if (shopDTO.getMerchantName().isEmpty()){
             return Result.failure("店铺名称！");
+        }
+        QueryWrapper<Shop> wrapper = new QueryWrapper<>();
+        wrapper.eq("username",shopDTO.getUsername());
+        if(shopService.getOne(wrapper)==null){
+            return Result.failure("此用户昵称不存在");
         }
         Shop shop = new Shop();
         BeanUtils.copyProperties(shopDTO,shop);
