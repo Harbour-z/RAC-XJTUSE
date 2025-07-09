@@ -16,6 +16,7 @@ import com.example.mybatisplusdemo.common.Result;
 import com.example.mybatisplusdemo.service.IUserInfoService;
 import com.example.mybatisplusdemo.model.domain.UserInfo;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 
@@ -70,6 +71,8 @@ public class UserInfoController {
 
         UserInfo user = new UserInfo();
         BeanUtils.copyProperties(registerDTO,user);
+        user.setCreateTime(LocalDateTime.now());
+        user.setUpdateTime(LocalDateTime.now());
         boolean res = userInfoService.save(user);
         log.info("res:{}",res);
         return res ?Result.success(user):Result.failure("注册失败");
@@ -104,5 +107,7 @@ public class UserInfoController {
         boolean b = userInfoService.updateById(user);
         return Result.success(b);
     }
+
+    //
 }
 
