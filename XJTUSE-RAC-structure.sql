@@ -16,6 +16,7 @@ CREATE TABLE user_info(
     `birthday` DATETIME   COMMENT '用户生日' ,
     `signature` VARCHAR(255)   COMMENT '个性签名' ,
     `email` VARCHAR(128)   COMMENT '用户邮箱' ,
+    `status` tinyint unsigned comment '用户状态',
     `profile_visible` tinyint unsigned   COMMENT '用户资料可见性' ,
     `favorite_visible` tinyint unsigned   COMMENT '收藏是否可见' ,
     PRIMARY KEY (id)
@@ -65,6 +66,7 @@ CREATE TABLE shop(
     `category_id` INT   COMMENT '店铺分类' ,
     `address` VARCHAR(255)   COMMENT '店铺地址' ,
     `merchant_name` VARCHAR(64) COMMENT '店铺名称' ,
+    `user_id` bigint unsigned not null comment '店铺经营者id',
     `logitude` DECIMAL   COMMENT '经度' ,
     `latitude` DECIMAL   COMMENT '纬度' ,
     `avg_rating` DECIMAL   COMMENT '平均评分' ,
