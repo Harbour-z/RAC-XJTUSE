@@ -12,8 +12,8 @@ CREATE TABLE user_info(
     `user_avatar` VARCHAR(255)   COMMENT '用户头像;头像资源地址' ,
     `is_deleted` tinyint unsigned NOT NULL DEFAULT 0 COMMENT '用户状态;0-正常 1-删除' ,
     `status` tinyint unsigned NOT NULL DEFAULT 0 COMMENT '用户状态;0-正常 1-冻结' ,
-    `create_time` DATETIME   COMMENT '创建时间' ,
-    `update_time` DATETIME   COMMENT '更新时间' ,
+    `create_time` DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间' ,
+    `update_time` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间' ,
     `birthday` DATETIME   COMMENT '用户生日' ,
     `signature` VARCHAR(255)   COMMENT '个性签名' ,
     `email` VARCHAR(128)   COMMENT '用户邮箱' ,
@@ -28,8 +28,8 @@ CREATE TABLE admin_info(
     `username` VARCHAR(50) NOT NULL UNIQUE COMMENT '管理员账号' ,
     `password` VARCHAR(255) NOT NULL  COMMENT '密码' ,
     `avatar` VARCHAR(255)   COMMENT '管理员头像;头像资源URL' ,
-    `create_time` DATETIME   COMMENT '' ,
-    `update_time` DATETIME   COMMENT '' ,
+    `create_time` DATETIME DEFAULT CURRENT_TIMESTAMP  COMMENT '' ,
+    `update_time` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP  COMMENT '' ,
     `phone` VARCHAR(20)   COMMENT '' ,
     `email` VARCHAR(255)   COMMENT '' ,
     `is_deleted` tinyint unsigned NOT NULL DEFAULT 0 COMMENT '' ,
@@ -41,8 +41,8 @@ CREATE TABLE user_favorite(
     `id` bigint unsigned NOT NULL AUTO_INCREMENT COMMENT '' ,
     `user_id` bigint unsigned   COMMENT '用户ID' ,
     `merchant_id` bigint unsigned   COMMENT '被收藏商家ID' ,
-    `create_time` DATETIME   COMMENT '' ,
-    `update_time` DATETIME   COMMENT '' ,
+    `create_time` DATETIME DEFAULT CURRENT_TIMESTAMP  COMMENT '' ,
+    `update_time` DATETIME  DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '' ,
     `merchant_tag` tinyint unsigned   COMMENT '对被收藏商户的tag(0-待探索 1-常去 2-备选 3-不感兴趣)' ,
     `is_deleted` tinyint unsigned NOT NULL DEFAULT 0 COMMENT '' ,
     PRIMARY KEY (id)
@@ -55,8 +55,8 @@ CREATE TABLE merchant_category(
     `name` VARCHAR(50)  UNIQUE COMMENT '分类名称' ,
     `icon` VARCHAR(255)   COMMENT '分类图标url' ,
     `is_deleted` tinyint unsigned NOT NULL DEFAULT 0 COMMENT '状态(0-启用, 1-禁用)' ,
-    `create_time` DATETIME   COMMENT '' ,
-    `update_time` DATETIME   COMMENT '' ,
+    `create_time` DATETIME DEFAULT CURRENT_TIMESTAMP  COMMENT '' ,
+    `update_time` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP  COMMENT '' ,
     PRIMARY KEY (id)
 )  COMMENT = '商家分类表';
 
@@ -73,8 +73,8 @@ CREATE TABLE shop(
     `description` VARCHAR(255)   COMMENT '店铺简介' ,
     `cover` VARCHAR(255)   COMMENT '封面URL' ,
     `is_deleted` tinyint unsigned NOT NULL DEFAULT 0 COMMENT '' ,
-    `create_time` DATETIME   COMMENT '' ,
-    `update_time` DATETIME   COMMENT '' ,
+    `create_time` DATETIME DEFAULT CURRENT_TIMESTAMP  COMMENT '' ,
+    `update_time` DATETIME  DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '' ,
     `price_range` VARCHAR(255)   COMMENT '价格区间' ,
     `tag` VARCHAR(255)   COMMENT '商家标签' ,
     PRIMARY KEY (id)
@@ -90,8 +90,8 @@ CREATE TABLE merchant_info(
   `phone` VARCHAR(20)   COMMENT '联系方式' ,
   `avatar` VARCHAR(255)   COMMENT '用户头像;头像资源地址' ,
   `is_deleted` tinyint unsigned NOT NULL DEFAULT 0 COMMENT '' ,
-  `create_time` DATETIME   COMMENT '' ,
-  `update_time` DATETIME   COMMENT '' ,
+  `create_time` DATETIME DEFAULT CURRENT_TIMESTAMP  COMMENT '' ,
+  `update_time` DATETIME  DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '' ,
   PRIMARY KEY (id)
 )  COMMENT = '商家用户信息表';
 
@@ -102,8 +102,8 @@ CREATE TABLE merchant_qulification(
     `license_number` VARCHAR(255)   COMMENT '营业许可证编号' ,
     `license` VARCHAR(255)   COMMENT '许可证图片url' ,
     `other_permit` VARCHAR(255)   COMMENT '其余资质许可图片(JSON)' ,
-    `create_time` DATETIME   COMMENT '' ,
-    `update_time` DATETIME   COMMENT '' ,
+    `create_time` DATETIME  DEFAULT CURRENT_TIMESTAMP COMMENT '' ,
+    `update_time` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP  COMMENT '' ,
     `health` VARCHAR(255)   COMMENT '卫生许可证图片' ,
     `status` tinyint unsigned   COMMENT '审核进度((0-待审核,1-审核中,2-审核通过,3-审核不通过,4-已冻结))' ,
     `reject_reason` VARCHAR(255)   COMMENT '拒绝原因' ,
@@ -118,11 +118,11 @@ CREATE TABLE merchant_hours_delivery(
     `week_day` tinyint unsigned   COMMENT '工作天数' ,
     `open_time` time   COMMENT '营业开始时间' ,
     `close_time` time   COMMENT '打烊时间' ,
-    `radius` DECIMAL   COMMENT '配送半径' ,
-    `min_amount` DECIMAL   COMMENT '起送金额' ,
-    `delivery_fee` DECIMAL   COMMENT '配送费' ,
-    `create_time` DATETIME   COMMENT '' ,
-    `update_time` DATETIME   COMMENT '' ,
+    `radius` DOUBLE   COMMENT '配送半径' ,
+    `min_amount` DOUBLE   COMMENT '起送金额' ,
+    `delivery_fee` DOUBLE   COMMENT '配送费' ,
+    `create_time` DATETIME DEFAULT CURRENT_TIMESTAMP  COMMENT '' ,
+    `update_time` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP  COMMENT '' ,
     `is_deleted` tinyint unsigned NOT NULL DEFAULT 0 COMMENT '' ,
     PRIMARY KEY (id)
 )  COMMENT = '商家工作时间与配送范围';
@@ -134,11 +134,11 @@ CREATE TABLE comment(
     `content_id` bigint unsigned   COMMENT '评论的内容id' ,
     `reply_comment_id` bigint unsigned default null comment '为null则表示对主楼内容的回复，否则为对楼中某个评论的回复',
     `content` TEXT   COMMENT '内容' ,
-    `overall_rating` DECIMAL   COMMENT '总体评分' ,
+    `overall_rating` DOUBLE   COMMENT '总体评分' ,
     `status` tinyint unsigned   COMMENT '状态(0-待审核,1-审核通过,2-审核不通过)' ,
     `reject_reason` TEXT   COMMENT '审核被拒绝原因' ,
-    `create_time` DATETIME  default CURRENT_TIMESTAMP COMMENT '' ,
-    `update_time` DATETIME  default CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '' ,
+    `create_time` DATETIME  DEFAULT CURRENT_TIMESTAMP COMMENT '' ,
+    `update_time` DATETIME  DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '' ,
     `picture` VARCHAR(255)   COMMENT '图片url JSON' ,
     `video` VARCHAR(255)   COMMENT '视频url JSON' ,
     `is_deleted` tinyint unsigned NOT NULL DEFAULT 0 COMMENT '' ,
@@ -149,11 +149,11 @@ DROP TABLE IF EXISTS rating_dimension;
 CREATE TABLE rating_dimension(
     `id` bigint unsigned NOT NULL AUTO_INCREMENT COMMENT '' ,
     `comment_id` bigint unsigned   COMMENT '评论id' ,
-    `rating_env` DECIMAL  COMMENT '环境评分' ,
-    `rating_service` DECIMAL   COMMENT '服务评分' ,
-    `rating_flavor` DECIMAL   COMMENT '口味评分' ,
-    `create_time` DATETIME   COMMENT '' ,
-    `update_time` DATETIME   COMMENT '' ,
+    `rating_env` DOUBLE  COMMENT '环境评分' ,
+    `rating_service` DOUBLE   COMMENT '服务评分' ,
+    `rating_flavor` DOUBLE   COMMENT '口味评分' ,
+    `create_time` DATETIME DEFAULT CURRENT_TIMESTAMP  COMMENT '' ,
+    `update_time` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP  COMMENT '' ,
     `is_deleted` tinyint unsigned NOT NULL DEFAULT 0 COMMENT '' ,
     PRIMARY KEY (id)
 )  COMMENT = '评分维度表';
@@ -165,8 +165,8 @@ CREATE TABLE comment_reply(
     `user_id` bigint unsigned   COMMENT '' ,
     `merchant_id` bigint unsigned   COMMENT '' ,
     `content` TEXT   COMMENT '' ,
-    `create_time` DATETIME   COMMENT '' ,
-    `update_time` DATETIME   COMMENT '' ,
+    `create_time` DATETIME DEFAULT CURRENT_TIMESTAMP  COMMENT '' ,
+    `update_time` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP  COMMENT '' ,
     `is_deleted` tinyint unsigned NOT NULL DEFAULT 0 COMMENT '' ,
     PRIMARY KEY (id)
 )  COMMENT = '评论回复表';
@@ -182,7 +182,7 @@ CREATE TABLE merchant_content(
     `like_count` bigint unsigned  default 0 COMMENT '点赞数' ,
     `comment_count` bigint unsigned  default 0 COMMENT '评论数' ,
     `create_time` DATETIME  DEFAULT CURRENT_TIMESTAMP COMMENT '' ,
-    `update_time` DATETIME default CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '' ,
+    `update_time` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '' ,
     `picture` VARCHAR(255)   COMMENT '图片url' ,
     `video` VARCHAR(255)   COMMENT '视频url' ,
     `is_deleted` tinyint unsigned NOT NULL DEFAULT 0 COMMENT '' ,
@@ -196,8 +196,8 @@ CREATE TABLE user_browse_history(
     `merchant_id` bigint unsigned   COMMENT '' ,
     `browse_time` DATETIME   COMMENT '浏览时间' ,
     `stay_duration` bigint unsigned   COMMENT '停留时长' ,
-    `create_time` DATETIME   COMMENT '' ,
-    `update-time` DATETIME   COMMENT '' ,
+    `create_time` DATETIME DEFAULT CURRENT_TIMESTAMP  COMMENT '' ,
+    `update-time` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP  COMMENT '' ,
     `is_deleted` tinyint unsigned NOT NULL DEFAULT 0 COMMENT '' ,
     PRIMARY KEY (id)
 )  COMMENT = '用户浏览历史表';
@@ -211,8 +211,8 @@ CREATE TABLE admin_audit_log(
     `old_status` tinyint unsigned   COMMENT '审核前状态' ,
     `new_status` tinyint unsigned   COMMENT '审核后状态' ,
     `audit_remark` TEXT   COMMENT '审核备注(拒绝原因等)' ,
-    `create_time` DATETIME   COMMENT '' ,
-    `update_time` DATETIME   COMMENT '' ,
+    `create_time` DATETIME DEFAULT CURRENT_TIMESTAMP  COMMENT '' ,
+    `update_time` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP  COMMENT '' ,
     `is_deleted` tinyint unsigned NOT NULL DEFAULT 0 COMMENT '' ,
     PRIMARY KEY (id)
 )  COMMENT = '审核日志表';

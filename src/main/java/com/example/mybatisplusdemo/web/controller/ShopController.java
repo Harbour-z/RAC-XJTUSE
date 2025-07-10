@@ -100,8 +100,7 @@ Exception {
         log.info("shopDTO:{}",shopDTO);
         //存储许可证信息
         MerchantQulification qulification = new MerchantQulification();
-        qulification.setMerchantId(merchantInfoService.getOne(new QueryWrapper<MerchantInfo>().eq("username",username)).getId())
-            .setOtherPermit(stringArrayToJsonString(shopDTO.getOtherPermit()));
+        qulification.setMerchantId(merchantInfoService.getOne(new QueryWrapper<MerchantInfo>().eq("username",username)).getId());
         BeanUtils.copyProperties(shopDTO,qulification);
         boolean res1 = merchantQulificationService.save(qulification);
         return (res&&res1)?Result.success(shop):Result.failure("店铺创建失败");
@@ -169,14 +168,6 @@ Exception {
             return Result.failure("未找到指定店铺");
         }
         return Result.success(shops);
-    }
-
-    public static String stringArrayToJsonString(String[] array) throws Exception {
-        return objectMapper.writeValueAsString(array);
-    }
-
-    public static String[] jsonStringToStringArray(String jsonString) throws Exception {
-        return objectMapper.readValue(jsonString, String[].class);
     }
 }
 
