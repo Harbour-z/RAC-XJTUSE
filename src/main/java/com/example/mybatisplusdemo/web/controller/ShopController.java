@@ -6,9 +6,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.mybatisplusdemo.common.utls.SessionUtils;
 import com.example.mybatisplusdemo.model.domain.MerchantInfo;
 import com.example.mybatisplusdemo.model.domain.MerchantQulification;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.mybatisplusdemo.model.domain.UserInfo;
-import com.example.mybatisplusdemo.model.dto.PageDTO;
 import com.example.mybatisplusdemo.model.dto.SearchShopDTO;
 import com.example.mybatisplusdemo.model.dto.ShopDTO;
 import com.example.mybatisplusdemo.service.IMerchantInfoService;
@@ -26,9 +24,8 @@ import com.example.mybatisplusdemo.common.Result;
 import com.example.mybatisplusdemo.service.IShopService;
 import com.example.mybatisplusdemo.model.domain.Shop;
 
-import java.security.Principal;
-import java.sql.Wrapper;
 import java.time.LocalDateTime;
+import java.util.List;
 
 
 /**
@@ -142,6 +139,22 @@ Exception {
         // 执行分页查询
         IPage<Shop> result = shopService.page(page, queryWrapper);
         return Result.success(result);
+    }
+
+    @PostMapping("getByName")
+    public Result<List<Shop>> getByName(@RequestBody ShopDTO queryDTO) {
+        if (queryDTO.getUsername() == null || queryDTO.getUsername().isEmpty()) {
+            return Result.failure("username不能为空");
+        }
+
+        QueryWrapper<Shop> queryWrapper = new QueryWrapper<>();
+        queryWrapper.like("username", queryDTO.getUsername());
+        List<Shop> shops = shopService.list(queryWrapper);
+
+        if (shops == null || shops.isEmpty()) {
+            return Result.failure("未找到指定店铺");
+        }
+        return Result.success(shops);
     }
 }
 

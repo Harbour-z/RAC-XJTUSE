@@ -1,5 +1,6 @@
 package com.example.mybatisplusdemo.web.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,6 +39,23 @@ public class MerchantQulificationController {
     public Result<MerchantQulification> getById(@PathVariable("id") Long id)throws
 Exception {
         MerchantQulification merchantQulification = merchantQulificationService.getById(id);
+        return Result.success(merchantQulification);
+    }
+
+    @PostMapping("/getByMerchantId")
+    @ResponseBody
+    public Result<MerchantQulification> getByMerchantId(@RequestBody MerchantQulification request) {
+        Long merchantId = request.getMerchantId();
+        if (merchantId == null) {
+            return Result.failure("merchantId不能为空");
+        }
+        QueryWrapper<MerchantQulification> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("merchant_id", merchantId);
+        MerchantQulification merchantQulification = merchantQulificationService.getOne(queryWrapper);
+
+        if (merchantQulification == null) {
+            return Result.failure("未找到该商户的资质信息");
+        }
         return Result.success(merchantQulification);
     }
 }

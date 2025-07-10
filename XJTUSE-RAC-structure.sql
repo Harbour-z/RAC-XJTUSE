@@ -67,7 +67,7 @@ CREATE TABLE shop(
     `address` VARCHAR(255)   COMMENT '店铺地址' ,
     `merchant_name` VARCHAR(64) UNIQUE COMMENT '店铺名称' ,
     `username` varchar(128) not null comment '店铺经营者username',
-    `logitude` DECIMAL   COMMENT '经度' ,
+    `longitude` DECIMAL   COMMENT '经度' ,
     `latitude` DECIMAL   COMMENT '纬度' ,
     `avg_rating` DECIMAL   COMMENT '平均评分' ,
     `description` VARCHAR(255)   COMMENT '店铺简介' ,
