@@ -5,7 +5,10 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.mybatisplusdemo.common.utls.SessionUtils;
 import com.example.mybatisplusdemo.model.domain.MerchantQulification;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.mybatisplusdemo.model.domain.UserInfo;
+import com.example.mybatisplusdemo.model.dto.PageDTO;
+import com.example.mybatisplusdemo.model.dto.SearchShopDTO;
 import com.example.mybatisplusdemo.model.dto.ShopDTO;
 import com.example.mybatisplusdemo.service.IUserInfoService;
 import lombok.extern.slf4j.Slf4j;
@@ -99,6 +102,14 @@ Exception {
             return b ? Result.successMessage("Delete shop successfully!"):Result.failure("Delete shop failed!");
         }
         return Result.failure("Delete merchant-user failed!");
+    }
+
+
+    //搜索显示shop
+    @GetMapping("listPage")
+    public Result listPage(SearchShopDTO searchShopDTO)throws Exception{
+        Page<Shop> page = shopService.listPage(searchShopDTO);
+        return Result.success(page);
     }
 
     //店铺搜索分页器（目前功能针对用户主页的查询，接受前端的MerchantName（店铺名字），从后端获取对应的的店铺信息

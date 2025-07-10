@@ -1,7 +1,10 @@
 package com.example.mybatisplusdemo.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.mybatisplusdemo.model.domain.Shop;
+import com.example.mybatisplusdemo.model.dto.SearchShopDTO;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * <p>
@@ -13,4 +16,5 @@ import com.example.mybatisplusdemo.model.domain.Shop;
  */
 public interface ShopMapper extends BaseMapper<Shop> {
 
+    Page<Shop> listPage(@Param("page") Page<Shop> page,@Param("shop") SearchShopDTO searchShopDTO)throws Exception;
 }
