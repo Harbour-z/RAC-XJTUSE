@@ -8,7 +8,7 @@
         <result column="merchant_id" property="merchantId" />
         <result column="license_number" property="licenseNumber" />
         <result column="license" property="license" />
-        <result column="other_permit" property="otherPermit" />
+        <result column="other_permit" property="otherPermit" typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler"/>
         <result column="create_time" property="createTime" />
         <result column="update_time" property="updateTime" />
         <result column="health" property="health" />

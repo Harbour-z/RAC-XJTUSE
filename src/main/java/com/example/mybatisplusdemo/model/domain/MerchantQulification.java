@@ -10,6 +10,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 import com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -48,7 +49,8 @@ public class MerchantQulification implements Serializable {
     private String license;
 
         @ApiModelProperty(value = "其余资质许可图片(JSON)")
-    @TableField("other_permit")
+    @TableField(value = "other_permit",typeHandler = com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler.class)
+    @JsonFormat(shape = JsonFormat.Shape.ARRAY)
     private String otherPermit;
 
     @TableField("create_time")
