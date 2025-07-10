@@ -14,6 +14,7 @@ import com.example.mybatisplusdemo.model.dto.ShopDTO;
 import com.example.mybatisplusdemo.service.IMerchantInfoService;
 import com.example.mybatisplusdemo.service.IMerchantQulificationService;
 import com.example.mybatisplusdemo.service.IUserInfoService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,6 +30,7 @@ import com.example.mybatisplusdemo.model.domain.Shop;
 import java.security.Principal;
 import java.sql.Wrapper;
 import java.time.LocalDateTime;
+import java.util.List;
 
 
 /**
@@ -44,8 +46,8 @@ import java.time.LocalDateTime;
 @RequestMapping("/api/shop")
 @Slf4j
 public class ShopController {
-
     private final Logger logger = LoggerFactory.getLogger( ShopController.class );
+    private static final ObjectMapper objectMapper = new ObjectMapper();
 
     @Autowired
     private IShopService shopService;
@@ -71,7 +73,7 @@ Exception {
 
     @PostMapping("/register")
     @Transactional
-    public Result<Shop> registerShop(@RequestBody ShopDTO shopDTO){
+    public Result<Shop> registerShop(@RequestBody ShopDTO shopDTO) throws Exception {
         // ShopDTO中必须要有店铺名称和店铺经营者username
         log.info("shopDTO:{}",shopDTO);
         if (shopDTO.getUsername() == null || shopDTO.getMerchantName()==null){
@@ -81,7 +83,9 @@ Exception {
             return Result.failure("店铺名称不能为空！");
         }
         QueryWrapper<MerchantInfo> wrapper = new QueryWrapper<>();
-        wrapper.eq("username", SessionUtils.getCurrentMerchantInfo().getUsername());
+        String username = SessionUtils.getCurrentMerchantInfo().getUsername();
+        log.info("username:{}",username);
+        wrapper.eq("username", username);
         if(merchantInfoService.getOne(wrapper)==null){
             return Result.failure("此用户昵称不存在");
         }
@@ -96,6 +100,8 @@ Exception {
         log.info("shopDTO:{}",shopDTO);
         //存储许可证信息
         MerchantQulification qulification = new MerchantQulification();
+        qulification.setMerchantId(merchantInfoService.getOne(new QueryWrapper<MerchantInfo>().eq("username",username)).getId())
+            .setOtherPermit(stringArrayToJsonString(shopDTO.getOtherPermit()));
         BeanUtils.copyProperties(shopDTO,qulification);
         boolean res1 = merchantQulificationService.save(qulification);
         return (res&&res1)?Result.success(shop):Result.failure("店铺创建失败");
@@ -126,22 +132,51 @@ Exception {
     @GetMapping("/search")
     public Result<IPage<Shop>> searchShops(
             @RequestParam(required = false) String merchantName,
+            @RequestParam(required = false) String categoryId, // 新增分类ID参数
             @RequestParam(defaultValue = "1") Integer pageNum,
             @RequestParam(defaultValue = "10") Integer pageSize
     ) {
-        System.out.println(merchantName);
         // 创建分页对象
         Page<Shop> page = new Page<>(pageNum, pageSize);
 
         // 构建查询条件
         QueryWrapper<Shop> queryWrapper = new QueryWrapper<>();
         if (merchantName != null && !merchantName.isEmpty()) {
-            queryWrapper.like("merchant_name", merchantName); // 模糊查询店铺名称
+            queryWrapper.like("merchant_name", merchantName);
+        }
+
+        // 添加分类筛选条件
+        if (categoryId != null && !categoryId.isEmpty() && !"all".equals(categoryId)) {
+            queryWrapper.eq("category_id", categoryId);
         }
 
         // 执行分页查询
         IPage<Shop> result = shopService.page(page, queryWrapper);
         return Result.success(result);
+    }
+
+    @PostMapping("getByName")
+    public Result<List<Shop>> getByName(@RequestBody ShopDTO queryDTO) {
+        if (queryDTO.getUsername() == null || queryDTO.getUsername().isEmpty()) {
+            return Result.failure("username不能为空");
+        }
+
+        QueryWrapper<Shop> queryWrapper = new QueryWrapper<>();
+        queryWrapper.like("username", queryDTO.getUsername());
+        List<Shop> shops = shopService.list(queryWrapper);
+
+        if (shops == null || shops.isEmpty()) {
+            return Result.failure("未找到指定店铺");
+        }
+        return Result.success(shops);
+    }
+
+    public static String stringArrayToJsonString(String[] array) throws Exception {
+        return objectMapper.writeValueAsString(array);
+    }
+
+    public static String[] jsonStringToStringArray(String jsonString) throws Exception {
+        return objectMapper.readValue(jsonString, String[].class);
     }
 }
 

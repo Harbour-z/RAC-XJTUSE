@@ -13,6 +13,7 @@
         <result column="avg_rating" property="avgRating" />
         <result column="description" property="description" />
         <result column="cover" property="cover" />
+        <result column="username" property="username" />
         <result column="is_deleted" property="isDeleted" />
         <result column="create_time" property="createTime" />
         <result column="update_time" property="updateTime" />

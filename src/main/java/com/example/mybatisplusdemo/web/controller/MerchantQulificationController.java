@@ -1,5 +1,6 @@
 package com.example.mybatisplusdemo.web.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,6 +9,8 @@ import org.springframework.web.bind.annotation.*;
 import com.example.mybatisplusdemo.common.Result;
 import com.example.mybatisplusdemo.service.IMerchantQulificationService;
 import com.example.mybatisplusdemo.model.domain.MerchantQulification;
+
+import java.util.List;
 
 
 /**
@@ -39,6 +42,24 @@ public class MerchantQulificationController {
 Exception {
         MerchantQulification merchantQulification = merchantQulificationService.getById(id);
         return Result.success(merchantQulification);
+    }
+
+    @PostMapping("/getByMerchantId")
+    @ResponseBody
+    public Result<List<MerchantQulification>> getByMerchantId(@RequestBody MerchantQulification request) {
+        Long merchantId = request.getMerchantId();
+        if (merchantId == null) {
+            return Result.failure("merchantId不能为空");
+        }
+
+        QueryWrapper<MerchantQulification> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("merchant_id", merchantId);
+        List<MerchantQulification> qualifications = merchantQulificationService.list(queryWrapper);
+
+        if (qualifications == null || qualifications.isEmpty()) {
+            return Result.failure("未找到该商户的资质信息");
+        }
+        return Result.success(qualifications);
     }
 }
 

@@ -10,7 +10,7 @@ public class ShopDTO {
   private String description;
   private Double latitude;
   private String licenseNumber ;
-  private Double logitude;
+  private Double longitude;
   private String merchantName;
   private Integer categoryId;
   private String username;
