@@ -126,17 +126,22 @@ Exception {
     @GetMapping("/search")
     public Result<IPage<Shop>> searchShops(
             @RequestParam(required = false) String merchantName,
+            @RequestParam(required = false) String categoryId, // 新增分类ID参数
             @RequestParam(defaultValue = "1") Integer pageNum,
             @RequestParam(defaultValue = "10") Integer pageSize
     ) {
-        System.out.println(merchantName);
         // 创建分页对象
         Page<Shop> page = new Page<>(pageNum, pageSize);
 
         // 构建查询条件
         QueryWrapper<Shop> queryWrapper = new QueryWrapper<>();
         if (merchantName != null && !merchantName.isEmpty()) {
-            queryWrapper.like("merchant_name", merchantName); // 模糊查询店铺名称
+            queryWrapper.like("merchant_name", merchantName);
+        }
+
+        // 添加分类筛选条件
+        if (categoryId != null && !categoryId.isEmpty() && !"all".equals(categoryId)) {
+            queryWrapper.eq("category_id", categoryId);
         }
 
         // 执行分页查询
