@@ -8,7 +8,7 @@
         <result column="category_id" property="categoryId" />
         <result column="address" property="address" />
         <result column="merchant_name" property="merchantName" />
-        <result column="logitude" property="logitude" />
+        <result column="longitude" property="longitude" />
         <result column="latitude" property="latitude" />
         <result column="avg_rating" property="avgRating" />
         <result column="description" property="description" />
@@ -19,5 +19,18 @@
         <result column="price_range" property="priceRange" />
         <result column="tag" property="tag" />
     </resultMap>
+
+    <select id="listPage" resultType="com.example.mybatisplusdemo.model.domain.Shop">
+        select * from shop
+        <where>
+            is_deleted = 0
+            <if test="shop.avgRating != null">
+                and avg_rating > #{shop.avgRating}
+            </if>
+            <if test="shop.categoryId != null">
+                and category_id = #{shop.categoryId}
+            </if>
+        </where>
+    </select>
 
 </mapper>
