@@ -133,6 +133,5 @@ public class MerchantInfoController {
         Page<MerchantInfo> page = merchantInfoService.listPage(pageDTO,merchant);
         return Result.success(page);
     }
-
 }
 
