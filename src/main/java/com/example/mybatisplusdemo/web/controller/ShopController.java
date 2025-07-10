@@ -1,7 +1,10 @@
 package com.example.mybatisplusdemo.web.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.mybatisplusdemo.model.domain.UserInfo;
+import com.example.mybatisplusdemo.model.dto.PageDTO;
+import com.example.mybatisplusdemo.model.dto.SearchShopDTO;
 import com.example.mybatisplusdemo.model.dto.ShopDTO;
 import com.example.mybatisplusdemo.service.IUserInfoService;
 import lombok.extern.slf4j.Slf4j;
@@ -89,6 +92,14 @@ Exception {
             return b ? Result.successMessage("Delete shop successfully!"):Result.failure("Delete shop failed!");
         }
         return Result.failure("Delete merchant-user failed!");
+    }
+
+
+    //搜索显示shop
+    @GetMapping("listPage")
+    public Result listPage(SearchShopDTO searchShopDTO)throws Exception{
+        Page<Shop> page = shopService.listPage(searchShopDTO);
+        return Result.success(page);
     }
 }
 

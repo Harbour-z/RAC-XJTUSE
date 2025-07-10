@@ -20,4 +20,17 @@
         <result column="tag" property="tag" />
     </resultMap>
 
+    <select id="listPage" resultType="com.example.mybatisplusdemo.model.domain.Shop">
+        select * from shop
+        <where>
+            is_deleted = 0
+            <if test="shop.avgRating != null">
+                and avg_rating > #{shop.avgRating}
+            </if>
+            <if test="shop.categoryId != null">
+                and categoryId = #{shop.categoryId}
+            </if>
+        </where>
+    </select>
+
 </mapper>
