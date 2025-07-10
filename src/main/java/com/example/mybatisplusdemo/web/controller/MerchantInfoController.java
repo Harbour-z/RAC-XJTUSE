@@ -99,7 +99,8 @@ public class MerchantInfoController {
             Result.failure("用户不存在");
         }else {
             boolean b = merchantInfoService.removeById(user.getId());
-            return b ? Result.successMessage("Delete merchant-user successfully!"):Result.failure("Delete merchant-user failed!");
+            boolean b1 = merchantInfoService.removeShops(username);
+            return (b&&b1) ? Result.successMessage("Delete merchant-user successfully!"):Result.failure("Delete merchant-user failed!");
         }
         return Result.failure("Delete merchant-user failed!");
     }
