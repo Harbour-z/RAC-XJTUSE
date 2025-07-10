@@ -13,6 +13,6 @@ public class CommentDTO {
   private String content;
   private Double overallRating;
   private Byte status;
-  private String picture;
+  private String[] images;
   private String video;
 }

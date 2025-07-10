@@ -13,7 +13,7 @@
         <result column="reject_reason" property="rejectReason" />
         <result column="create_time" property="createTime" />
         <result column="update_time" property="updateTime" />
-        <result column="picture" property="picture" />
+        <result column="images" property="images" typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler"/>
         <result column="video" property="video" />
         <result column="is_deleted" property="isDeleted" />
     </resultMap>

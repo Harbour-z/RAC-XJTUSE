@@ -5,6 +5,9 @@ import com.baomidou.mybatisplus.annotation.TableId;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -60,9 +63,11 @@ public class Comment implements Serializable {
     @TableField("update_time")
     private LocalDateTime updateTime;
 
-        @ApiModelProperty(value = "图片url JSON")
-    @TableField("picture")
-    private String picture;
+    // 使用 JsonFormat 确保 JSON 数组正确序列化/反序列化
+    @JsonFormat(shape = JsonFormat.Shape.ARRAY)
+    // 使用 TypeHandler 处理 JSON 字段
+    @TableField(typeHandler = com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler.class)
+    private List<String> images;
 
         @ApiModelProperty(value = "视频url JSON")
     @TableField("video")

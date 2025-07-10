@@ -68,6 +68,7 @@ Exception {
     //接受前端的json数据来更新评论内容
     @PostMapping("updateComment")
     public Result updateComment(@RequestBody Comment comment){
+
         boolean bool = commentService.updateById(comment);
         return Result.success(bool);
     }
