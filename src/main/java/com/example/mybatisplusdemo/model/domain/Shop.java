@@ -49,11 +49,11 @@ public class Shop implements Serializable {
 
         @ApiModelProperty(value = "经度")
     @TableField("longitude")
-    private Long longitude;
+    private Double longitude;
 
         @ApiModelProperty(value = "纬度")
     @TableField("latitude")
-    private Long latitude;
+    private Double latitude;
 
         @ApiModelProperty(value = "平均评分")
     @TableField("avg_rating")
