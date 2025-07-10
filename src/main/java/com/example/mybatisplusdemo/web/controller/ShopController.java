@@ -4,12 +4,15 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.mybatisplusdemo.common.utls.SessionUtils;
+import com.example.mybatisplusdemo.model.domain.MerchantInfo;
 import com.example.mybatisplusdemo.model.domain.MerchantQulification;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.mybatisplusdemo.model.domain.UserInfo;
 import com.example.mybatisplusdemo.model.dto.PageDTO;
 import com.example.mybatisplusdemo.model.dto.SearchShopDTO;
 import com.example.mybatisplusdemo.model.dto.ShopDTO;
+import com.example.mybatisplusdemo.service.IMerchantInfoService;
+import com.example.mybatisplusdemo.service.IMerchantQulificationService;
 import com.example.mybatisplusdemo.service.IUserInfoService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
@@ -48,6 +51,10 @@ public class ShopController {
     private IShopService shopService;
     @Autowired
     private IUserInfoService userInfoService;
+    @Autowired
+    private IMerchantInfoService merchantInfoService;
+    @Autowired
+    private IMerchantQulificationService merchantQulificationService;
 
 
     /**
@@ -73,9 +80,9 @@ Exception {
         if (shopDTO.getMerchantName().isEmpty()){
             return Result.failure("店铺名称不能为空！");
         }
-        QueryWrapper<UserInfo> wrapper = new QueryWrapper<>();
-        wrapper.eq("username", SessionUtils.getCurrentUserInfo().getUsername());
-        if(userInfoService.getOne(wrapper)==null){
+        QueryWrapper<MerchantInfo> wrapper = new QueryWrapper<>();
+        wrapper.eq("username", SessionUtils.getCurrentMerchantInfo().getUsername());
+        if(merchantInfoService.getOne(wrapper)==null){
             return Result.failure("此用户昵称不存在");
         }
         // 存储店铺信息
@@ -85,10 +92,13 @@ Exception {
         shop.setUpdateTime(LocalDateTime.now());
         shop.setUsername(shopDTO.getUsername());
         boolean res = shopService.save(shop);
+        log.info("shop:{}",shop);
+        log.info("shopDTO:{}",shopDTO);
         //存储许可证信息
         MerchantQulification qulification = new MerchantQulification();
         BeanUtils.copyProperties(shopDTO,qulification);
-        return res?Result.success(shop):Result.failure("店铺创建失败");
+        boolean res1 = merchantQulificationService.save(qulification);
+        return (res&&res1)?Result.success(shop):Result.failure("店铺创建失败");
     }
 
     // 注销店铺
