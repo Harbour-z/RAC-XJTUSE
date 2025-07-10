@@ -1,6 +1,8 @@
 package com.example.mybatisplusdemo.web.controller;
 
 import com.example.mybatisplusdemo.model.dto.CommentDTO;
+import org.apache.ibatis.annotations.Param;
+import org.apache.naming.factory.ResourceLinkFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.slf4j.Logger;
@@ -51,6 +53,17 @@ Exception {
         BeanUtils.copyProperties(commentDTO,comment);
         boolean result = commentService.save(comment);
         return result? Result.success(comment,"评论成功！"):Result.failure("评论失败");
+    }
+
+    @DeleteMapping("/deleteComment")
+    public  Result<Comment> deleteComment(@Param("commentId") Long commentId){
+        boolean result = false;
+        Comment middle = commentService.getById(commentId);
+        if(middle!=null){
+            result = commentService.removeById(commentId);
+        }
+
+        return result? Result.success(middle,"删除评论成功"):Result.failure("删除失败！");
     }
 }
 
