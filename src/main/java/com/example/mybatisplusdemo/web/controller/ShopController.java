@@ -14,6 +14,7 @@ import com.example.mybatisplusdemo.model.dto.ShopDTO;
 import com.example.mybatisplusdemo.service.IMerchantInfoService;
 import com.example.mybatisplusdemo.service.IMerchantQulificationService;
 import com.example.mybatisplusdemo.service.IUserInfoService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.transaction.annotation.Transactional;
@@ -46,6 +47,7 @@ import java.time.LocalDateTime;
 public class ShopController {
 
     private final Logger logger = LoggerFactory.getLogger( ShopController.class );
+    private static final ObjectMapper objectMapper = new ObjectMapper();
 
     @Autowired
     private IShopService shopService;
@@ -71,7 +73,7 @@ Exception {
 
     @PostMapping("/register")
     @Transactional
-    public Result<Shop> registerShop(@RequestBody ShopDTO shopDTO){
+    public Result<Shop> registerShop(@RequestBody ShopDTO shopDTO) throws Exception {
         // ShopDTO中必须要有店铺名称和店铺经营者username
         log.info("shopDTO:{}",shopDTO);
         if (shopDTO.getUsername() == null || shopDTO.getMerchantName()==null){
@@ -81,7 +83,9 @@ Exception {
             return Result.failure("店铺名称不能为空！");
         }
         QueryWrapper<MerchantInfo> wrapper = new QueryWrapper<>();
-        wrapper.eq("username", SessionUtils.getCurrentMerchantInfo().getUsername());
+        String username = SessionUtils.getCurrentMerchantInfo().getUsername();
+        log.info("username:{}",username);
+        wrapper.eq("username", username);
         if(merchantInfoService.getOne(wrapper)==null){
             return Result.failure("此用户昵称不存在");
         }
@@ -96,6 +100,8 @@ Exception {
         log.info("shopDTO:{}",shopDTO);
         //存储许可证信息
         MerchantQulification qulification = new MerchantQulification();
+        qulification.setMerchantId(merchantInfoService.getOne(new QueryWrapper<MerchantInfo>().eq("username",username)).getId())
+            .setOtherPermit(stringArrayToJsonString(shopDTO.getOtherPermit()));
         BeanUtils.copyProperties(shopDTO,qulification);
         boolean res1 = merchantQulificationService.save(qulification);
         return (res&&res1)?Result.success(shop):Result.failure("店铺创建失败");
@@ -142,6 +148,14 @@ Exception {
         // 执行分页查询
         IPage<Shop> result = shopService.page(page, queryWrapper);
         return Result.success(result);
+    }
+
+    public static String stringArrayToJsonString(String[] array) throws Exception {
+        return objectMapper.writeValueAsString(array);
+    }
+
+    public static String[] jsonStringToStringArray(String jsonString) throws Exception {
+        return objectMapper.readValue(jsonString, String[].class);
     }
 }
 
