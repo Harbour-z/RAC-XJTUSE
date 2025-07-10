@@ -7,6 +7,7 @@
         <id column="id" property="id" />
         <result column="username" property="username" />
         <result column="password" property="password" />
+        <result column="status" property="status" />
         <result column="email" property="email" />
         <result column="phone" property="phone" />
         <result column="avatar" property="avatar" />
@@ -19,6 +20,16 @@
         WHERE
             (username = #{account} OR phone = #{account} OR email = #{account})
           AND password = #{password}
+    </select>
+    <select id="listPage" resultMap="BaseResultMap">
+        select * from merchant_info
+        <where>
+            is_deleted = 0
+            and status = #{merchant.status}
+            <if test="merchant.username != null and merchant.username != ''">
+                and username like '%${merchant.username}%'
+            </if>
+        </where>
     </select>
 
 </mapper>

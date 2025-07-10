@@ -98,6 +98,15 @@ public class UserInfoController {
         if (existingUser == null) {
             return Result.failure("用户不存在");
         }
+        if (userInfo.getUsername() != null && !userInfo.getUsername().equals(existingUser.getUsername())) {
+            boolean isUsernameTaken = userInfoService.lambdaQuery()
+                    .eq(UserInfo::getUsername, userInfo.getUsername())
+                    .ne(UserInfo::getId, userInfo.getId()) // 排除当前用户
+                    .count() > 0;
+            if (isUsernameTaken) {
+                return Result.failure("用户名已被占用");
+            }
+        }
         boolean success = userInfoService.updateById(userInfo);
         return success ? Result.success(success) : Result.failure("更新失败");
     }

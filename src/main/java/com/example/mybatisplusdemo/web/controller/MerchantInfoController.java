@@ -1,10 +1,12 @@
 package com.example.mybatisplusdemo.web.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.mybatisplusdemo.common.utls.SessionUtils;
 import com.example.mybatisplusdemo.model.domain.UserInfo;
 import com.example.mybatisplusdemo.model.dto.LoginDTO;
 import com.example.mybatisplusdemo.model.dto.MerchantRegisterDTO;
+import com.example.mybatisplusdemo.model.dto.PageDTO;
 import com.example.mybatisplusdemo.model.dto.RegisterDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
@@ -100,6 +102,36 @@ public class MerchantInfoController {
             return b ? Result.successMessage("Delete merchant-user successfully!"):Result.failure("Delete merchant-user failed!");
         }
         return Result.failure("Delete merchant-user failed!");
+    }
+
+    @GetMapping("removeMerchant")
+    public Result removeMerchant(Long id){
+        boolean b = merchantInfoService.removeById(id);
+        return Result.success(b);
+    }
+
+    @PatchMapping("/updateMerchant")
+    public Result updateMerchant(@RequestBody MerchantInfo merchant) {
+        MerchantInfo existingMerchant = merchantInfoService.getById(merchant.getId());
+        if (existingMerchant == null) {
+            return Result.failure("商户不存在");
+        }
+        if (merchant.getUsername() != null && !merchant.getUsername().equals(existingMerchant.getUsername())) {
+            boolean isUsernameTaken = merchantInfoService.lambdaQuery()
+                    .eq(MerchantInfo::getUsername, merchant.getUsername())
+                    .ne(MerchantInfo::getId, merchant.getId()) // 排除当前用户
+                    .count() > 0;
+            if (isUsernameTaken) {
+                return Result.failure("用户名已被占用");
+            }
+        }
+        boolean success = merchantInfoService.updateById(merchant);
+        return success ? Result.success(success) : Result.failure("更新失败");
+    }
+    @GetMapping("listPage")
+    public Result listPage(PageDTO pageDTO, MerchantInfo merchant){
+        Page<MerchantInfo> page = merchantInfoService.listPage(pageDTO,merchant);
+        return Result.success(page);
     }
 
 }
