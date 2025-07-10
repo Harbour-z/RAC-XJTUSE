@@ -66,6 +66,7 @@ CREATE TABLE shop(
     `category_id` INT   COMMENT '店铺分类' ,
     `address` VARCHAR(255)   COMMENT '店铺地址' ,
     `merchant_name` VARCHAR(64) UNIQUE COMMENT '店铺名称' ,
+    `category` INT comment '分类',
     `username` varchar(128) not null comment '店铺经营者username',
     `longitude` DOUBLE COMMENT '经度' ,
     `latitude` DOUBLE   COMMENT '纬度' ,
@@ -139,7 +140,7 @@ CREATE TABLE comment(
     `reject_reason` TEXT   COMMENT '审核被拒绝原因' ,
     `create_time` DATETIME  DEFAULT CURRENT_TIMESTAMP COMMENT '' ,
     `update_time` DATETIME  DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '' ,
-    `picture` VARCHAR(255)   COMMENT '图片url JSON' ,
+    `picture` TEXT   COMMENT '图片url JSON' ,
     `video` VARCHAR(255)   COMMENT '视频url JSON' ,
     `is_deleted` tinyint unsigned NOT NULL DEFAULT 0 COMMENT '' ,
     PRIMARY KEY (id)
@@ -158,18 +159,6 @@ CREATE TABLE rating_dimension(
     PRIMARY KEY (id)
 )  COMMENT = '评分维度表';
 
-DROP TABLE IF EXISTS comment_reply;
-CREATE TABLE comment_reply(
-    `id` bigint unsigned NOT NULL AUTO_INCREMENT COMMENT '' ,
-    `comment_id` bigint unsigned   COMMENT '' ,
-    `user_id` bigint unsigned   COMMENT '' ,
-    `merchant_id` bigint unsigned   COMMENT '' ,
-    `content` TEXT   COMMENT '' ,
-    `create_time` DATETIME DEFAULT CURRENT_TIMESTAMP  COMMENT '' ,
-    `update_time` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP  COMMENT '' ,
-    `is_deleted` tinyint unsigned NOT NULL DEFAULT 0 COMMENT '' ,
-    PRIMARY KEY (id)
-)  COMMENT = '评论回复表';
 
 DROP TABLE IF EXISTS merchant_content;
 CREATE TABLE merchant_content(
@@ -185,6 +174,10 @@ CREATE TABLE merchant_content(
     `update_time` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '' ,
     `picture` VARCHAR(255)   COMMENT '图片url' ,
     `video` VARCHAR(255)   COMMENT '视频url' ,
+    `environment_rating` DOUBLE,
+    `service_rating` DOUBLE,
+    `taste_rating` DOUBLE,
+    `subcategory` INT,
     `is_deleted` tinyint unsigned NOT NULL DEFAULT 0 COMMENT '' ,
     PRIMARY KEY (id)
 )  COMMENT = '商家内容';
