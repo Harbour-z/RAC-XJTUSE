@@ -128,6 +128,8 @@ public class MerchantInfoController {
         boolean success = merchantInfoService.updateById(merchant);
         return success ? Result.success(success) : Result.failure("更新失败");
     }
+
+    //对商户分页查询
     @GetMapping("listPage")
     public Result listPage(PageDTO pageDTO, MerchantInfo merchant){
         Page<MerchantInfo> page = merchantInfoService.listPage(pageDTO,merchant);
