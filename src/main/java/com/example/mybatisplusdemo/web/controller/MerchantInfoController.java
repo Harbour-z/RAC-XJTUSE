@@ -136,5 +136,13 @@ public class MerchantInfoController {
         Page<MerchantInfo> page = merchantInfoService.listPage(pageDTO,merchant);
         return Result.success(page);
     }
-}
+
+    @GetMapping("getById")
+    public Result<MerchantInfo> getMerchantById(@RequestBody Long id) {
+        MerchantInfo merchant = merchantInfoService.getById(id);
+        if (merchant == null) {
+            return Result.failure("商户不存在");
+        }
+        return Result.success(merchant);
+    }}
 

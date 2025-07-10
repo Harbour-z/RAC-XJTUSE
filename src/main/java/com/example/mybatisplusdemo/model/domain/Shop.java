@@ -48,8 +48,8 @@ public class Shop implements Serializable {
     private String merchantName;
 
         @ApiModelProperty(value = "经度")
-    @TableField("logitude")
-    private Long logitude;
+    @TableField("longitude")
+    private Long longitude;
 
         @ApiModelProperty(value = "纬度")
     @TableField("latitude")

@@ -129,6 +129,7 @@ Exception {
             @RequestParam(defaultValue = "1") Integer pageNum,
             @RequestParam(defaultValue = "10") Integer pageSize
     ) {
+        System.out.println(merchantName);
         // 创建分页对象
         Page<Shop> page = new Page<>(pageNum, pageSize);
 
