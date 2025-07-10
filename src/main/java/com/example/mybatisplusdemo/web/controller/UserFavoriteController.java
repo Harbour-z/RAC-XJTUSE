@@ -1,6 +1,7 @@
 package com.example.mybatisplusdemo.web.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.mybatisplusdemo.common.utls.SessionUtils;
 import com.example.mybatisplusdemo.model.domain.MerchantInfo;
 import com.example.mybatisplusdemo.model.domain.Shop;
@@ -20,6 +21,7 @@ import com.example.mybatisplusdemo.service.IUserFavoriteService;
 import com.example.mybatisplusdemo.model.domain.UserFavorite;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 
 /**
@@ -98,6 +100,15 @@ Exception {
         }
         boolean res = userFavoriteService.removeById(favor.getId());
         return res?Result.success(favor,"取消收藏成功！"):Result.failure("取消收藏失败");
+    }
+
+    //获取指定current和size参数的收藏列表
+    @GetMapping("/getFavorList")
+    public Result<List<UserFavorite>> listFavorit(@RequestParam(value = "current") Long current, @RequestParam(value = "size") Long size){
+        Page<UserFavorite> page = new Page<>(current,size);
+        Page<UserFavorite> userPage = userFavoriteService.page(page);
+        List<UserFavorite> userFavoriteList = userPage.getRecords();
+        return Result.success(userFavoriteList,"成功获取收藏列表！");
     }
 }
 
