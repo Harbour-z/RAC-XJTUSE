@@ -1,5 +1,7 @@
 package com.example.mybatisplusdemo.web.controller;
 
+import com.example.mybatisplusdemo.model.dto.CommentDTO;
+import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,6 +10,8 @@ import org.springframework.web.bind.annotation.*;
 import com.example.mybatisplusdemo.common.Result;
 import com.example.mybatisplusdemo.service.ICommentService;
 import com.example.mybatisplusdemo.model.domain.Comment;
+
+import java.time.LocalDateTime;
 
 
 /**
@@ -39,6 +43,14 @@ public class CommentController {
 Exception {
         Comment comment = commentService.getById(id);
         return Result.success(comment);
+    }
+
+    @PostMapping("/pubComment")
+    public Result<Comment> pubComment(@RequestBody CommentDTO commentDTO){
+        Comment comment = new Comment();
+        BeanUtils.copyProperties(commentDTO,comment);
+        boolean result = commentService.save(comment);
+        return result? Result.success(comment,"评论成功！"):Result.failure("评论失败");
     }
 }
 

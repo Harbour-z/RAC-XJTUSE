@@ -1,11 +1,8 @@
 package com.example.mybatisplusdemo.model.domain;
 
+import com.baomidou.mybatisplus.annotation.*;
 import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableLogic;
-import com.baomidou.mybatisplus.annotation.TableName;
+
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import io.swagger.annotations.ApiModel;
@@ -35,11 +32,11 @@ public class Comment implements Serializable {
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
-    @TableField("user_id")
-    private Long userId;
+    @TableField("username")
+    private String username;
 
-    @TableField("merchant_id")
-    private Long merchantId;
+    @TableField("content_id")
+    private Long contentId;
 
         @ApiModelProperty(value = "内容")
     @TableField("content")
@@ -47,7 +44,7 @@ public class Comment implements Serializable {
 
         @ApiModelProperty(value = "总体评分")
     @TableField("overall_rating")
-    private Long overallRating;
+    private Double overallRating;
 
         @ApiModelProperty(value = "状态(0-待审核,1-审核通过,2-审核不通过)")
     @TableField("status")

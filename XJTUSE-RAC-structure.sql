@@ -130,15 +130,15 @@ CREATE TABLE merchant_hours_delivery(
 DROP TABLE IF EXISTS comment;
 CREATE TABLE comment(
     `id` bigint unsigned NOT NULL AUTO_INCREMENT COMMENT '评论id' ,
-    `username` bigint unsigned   COMMENT '' ,
+    `username` VARCHAR(255)   COMMENT '' ,
     `content_id` bigint unsigned   COMMENT '评论的内容id' ,
     `reply_comment_id` bigint unsigned default null comment '为null则表示对主楼内容的回复，否则为对楼中某个评论的回复',
     `content` TEXT   COMMENT '内容' ,
     `overall_rating` DECIMAL   COMMENT '总体评分' ,
     `status` tinyint unsigned   COMMENT '状态(0-待审核,1-审核通过,2-审核不通过)' ,
     `reject_reason` TEXT   COMMENT '审核被拒绝原因' ,
-    `create_time` DATETIME   COMMENT '' ,
-    `update_time` DATETIME   COMMENT '' ,
+    `create_time` DATETIME  default CURRENT_TIMESTAMP COMMENT '' ,
+    `update_time` DATETIME  default CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '' ,
     `picture` VARCHAR(255)   COMMENT '图片url JSON' ,
     `video` VARCHAR(255)   COMMENT '视频url JSON' ,
     `is_deleted` tinyint unsigned NOT NULL DEFAULT 0 COMMENT '' ,

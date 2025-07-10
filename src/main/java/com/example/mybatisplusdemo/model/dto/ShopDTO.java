@@ -8,9 +8,9 @@ public class ShopDTO {
 //  店面注册的前端传参
   private String address;
   private String description;
-  private Long latitude;
+  private Double latitude;
   private String licenseNumber ;
-  private Long logitude;
+  private Double logitude;
   private String merchantName;
   private Integer categoryId;
   private String username;
