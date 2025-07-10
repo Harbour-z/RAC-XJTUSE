@@ -1,6 +1,9 @@
 package com.example.mybatisplusdemo.web.controller;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.example.mybatisplusdemo.model.domain.Shop;
 import com.example.mybatisplusdemo.model.dto.CommentDTO;
+import com.example.mybatisplusdemo.model.dto.SearchShopDTO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.slf4j.Logger;
@@ -51,6 +54,27 @@ Exception {
         BeanUtils.copyProperties(commentDTO,comment);
         boolean result = commentService.save(comment);
         return result? Result.success(comment,"评论成功！"):Result.failure("评论失败");
+    }
+
+    //根据DTO中的信息来分页查询所有对应的评论
+    @GetMapping("listComments")
+    public Result listPage(CommentDTO commentDTO)throws Exception{
+        Page<Comment> page = commentService.listPage(commentDTO);
+        return Result.success(page);
+    }
+
+    //接受前端的json数据来更新评论内容
+    @PostMapping("updateComment")
+    public Result updateComment(@RequestBody Comment comment){
+        boolean bool = commentService.updateById(comment);
+        return Result.success(bool);
+    }
+
+    //删除当前评论
+    @GetMapping("deleteComment")
+    public Result deleteComments(Long id)throws Exception{
+        boolean bool = commentService.removeById(id);
+        return Result.success(bool);
     }
 }
 

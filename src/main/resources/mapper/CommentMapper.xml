@@ -17,5 +17,14 @@
         <result column="video" property="video" />
         <result column="is_deleted" property="isDeleted" />
     </resultMap>
+    <select id="listPage" resultMap="BaseResultMap">
+        select * from comment
+        <where>
+            is_deleted = 0
+            <if test="comment.userId != null">
+                and user_id = #{comment.userId}
+            </if>
+        </where>
+    </select>
 
 </mapper>

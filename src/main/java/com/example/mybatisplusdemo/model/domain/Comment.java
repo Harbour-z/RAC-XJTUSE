@@ -28,17 +28,17 @@ public class Comment implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-        @ApiModelProperty(value = "评论id")
+    @ApiModelProperty(value = "评论id")
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
-    @TableField("username")
-    private String username;
+    @TableField("user_id")
+    private Long userId;
 
-    @TableField("content_id")
-    private Long contentId;
+    @TableField("merchant_id")
+    private Long merchantId;
 
-        @ApiModelProperty(value = "内容")
+    @ApiModelProperty(value = "内容")
     @TableField("content")
     private String content;
 
@@ -72,5 +72,16 @@ public class Comment implements Serializable {
         @TableLogic
     private Byte isDeleted;
 
+    @ApiModelProperty(value = "环境评分")
+    @TableField("environment_rating")
+    private Double environmentRating;
+
+    @ApiModelProperty(value = "服务评分")
+    @TableField("service_rating")
+    private Double serviceRating;
+
+    @ApiModelProperty(value = "口味评分")
+    @TableField("taste_rating")
+    private Double tasteRating;
 
 }

@@ -1,7 +1,10 @@
 package com.example.mybatisplusdemo.service;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.mybatisplusdemo.model.domain.Comment;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.example.mybatisplusdemo.model.domain.Shop;
+import com.example.mybatisplusdemo.model.dto.CommentDTO;
 import com.example.mybatisplusdemo.model.dto.ContentDTO;
 
 /**
@@ -14,4 +17,5 @@ import com.example.mybatisplusdemo.model.dto.ContentDTO;
  */
 public interface ICommentService extends IService<Comment> {
 
+    Page<Comment> listPage(CommentDTO commentDTO);
 }
