@@ -1,11 +1,14 @@
 package com.example.mybatisplusdemo.web.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.example.mybatisplusdemo.common.utls.SessionUtils;
+import com.example.mybatisplusdemo.model.domain.MerchantQulification;
 import com.example.mybatisplusdemo.model.domain.UserInfo;
 import com.example.mybatisplusdemo.model.dto.ShopDTO;
 import com.example.mybatisplusdemo.service.IUserInfoService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -55,6 +58,7 @@ Exception {
     }
 
     @PostMapping("/register")
+    @Transactional
     public Result<Shop> registerShop(@RequestBody ShopDTO shopDTO){
         // ShopDTO中必须要有店铺名称和店铺经营者username
         log.info("shopDTO:{}",shopDTO);
@@ -62,19 +66,23 @@ Exception {
             return Result.failure("缺少必要信息！");
         }
         if (shopDTO.getMerchantName().isEmpty()){
-            return Result.failure("店铺名称！");
+            return Result.failure("店铺名称不能为空！");
         }
         QueryWrapper<UserInfo> wrapper = new QueryWrapper<>();
-        wrapper.eq("username",shopDTO.getUsername());
+        wrapper.eq("username", SessionUtils.getCurrentUserInfo().getUsername());
         if(userInfoService.getOne(wrapper)==null){
             return Result.failure("此用户昵称不存在");
         }
+        // 存储店铺信息
         Shop shop = new Shop();
         BeanUtils.copyProperties(shopDTO,shop);
         shop.setCreateTime(LocalDateTime.now());
         shop.setUpdateTime(LocalDateTime.now());
         shop.setUsername(shopDTO.getUsername());
         boolean res = shopService.save(shop);
+        //存储许可证信息
+        MerchantQulification qulification = new MerchantQulification();
+        BeanUtils.copyProperties(shopDTO,qulification);
         return res?Result.success(shop):Result.failure("店铺创建失败");
     }
 

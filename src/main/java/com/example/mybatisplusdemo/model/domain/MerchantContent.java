@@ -39,8 +39,8 @@ public class MerchantContent implements Serializable {
     private Long merchantId;
 
         @ApiModelProperty(value = "发布内容的标题")
-    @TableField("titile")
-    private String titile;
+    @TableField("title")
+    private String title;
 
         @ApiModelProperty(value = "商家发布的内容")
     @TableField("content")

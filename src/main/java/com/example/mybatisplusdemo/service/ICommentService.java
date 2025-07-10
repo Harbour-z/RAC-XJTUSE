@@ -2,6 +2,7 @@ package com.example.mybatisplusdemo.service;
 
 import com.example.mybatisplusdemo.model.domain.Comment;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.example.mybatisplusdemo.model.dto.ContentDTO;
 
 /**
  * <p>
