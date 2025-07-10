@@ -46,7 +46,6 @@ import java.util.List;
 @RequestMapping("/api/shop")
 @Slf4j
 public class ShopController {
-
     private final Logger logger = LoggerFactory.getLogger( ShopController.class );
     private static final ObjectMapper objectMapper = new ObjectMapper();
 
