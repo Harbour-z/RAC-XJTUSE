@@ -10,6 +10,8 @@ import com.example.mybatisplusdemo.common.Result;
 import com.example.mybatisplusdemo.service.IMerchantQulificationService;
 import com.example.mybatisplusdemo.model.domain.MerchantQulification;
 
+import java.util.List;
+
 
 /**
  *
@@ -44,19 +46,20 @@ Exception {
 
     @PostMapping("/getByMerchantId")
     @ResponseBody
-    public Result<MerchantQulification> getByMerchantId(@RequestBody MerchantQulification request) {
+    public Result<List<MerchantQulification>> getByMerchantId(@RequestBody MerchantQulification request) {
         Long merchantId = request.getMerchantId();
         if (merchantId == null) {
             return Result.failure("merchantId不能为空");
         }
+
         QueryWrapper<MerchantQulification> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("merchant_id", merchantId);
-        MerchantQulification merchantQulification = merchantQulificationService.getOne(queryWrapper);
+        List<MerchantQulification> qualifications = merchantQulificationService.list(queryWrapper);
 
-        if (merchantQulification == null) {
+        if (qualifications == null || qualifications.isEmpty()) {
             return Result.failure("未找到该商户的资质信息");
         }
-        return Result.success(merchantQulification);
+        return Result.success(qualifications);
     }
 }
 
