@@ -1,11 +1,11 @@
 # 对于需要修改的配置项，请取消注释并更改为您自己的配置信息
 spring:
   datasource:
-    #DB_HOST: "localhost"  # 若本地MySQL主机不是127.0.0.1
+    DB_HOST: "1.94.138.164"  # 若本地MySQL主机不是127.0.0.1
     #DB_PORT: 3306         # 若本地MySQL端口不是3306
-    #DB_NAME: "xjtuse_rac"     # 若本地数据库名不是xjtuse_rac
-    #username: root  # 本地数据库用户名（覆盖基础配置的${DB_USERNAME}）
-    password: 'xjtuse'  # 本地数据库密码（覆盖基础配置的${DB_PASSWORD}）
+    DB_NAME: "XJTUSE_RAC"     # 若本地数据库名不是xjtuse_rac
+    username: xjtu  # 本地数据库用户名（覆盖基础配置的${DB_USERNAME}）
+    password: 'XJTUse-RAC@2025'  # 本地数据库密码（覆盖基础配置的${DB_PASSWORD}）
 
 #server:
 #port: 8080

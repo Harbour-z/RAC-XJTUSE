@@ -4,9 +4,9 @@ spring:
     active: dev
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://${DB_HOST:127.0.0.1}:${DB_PORT:3306}/${DB_NAME:xjtuse_rac}?useUnicode=true&characterEncoding=utf8&useSSL=false
-    username: ${DB_USERNAME:root}
-    password: ${DB_PASSWORD:} # 数据库密码默认为空
+    url: jdbc:mysql://${DB_HOST:127.0.0.1}:${DB_PORT:3306}/${DB_NAME:xjtuse_rac}?useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true
+    username: ${DB_USERNAME:xjtu}
+    password: ${DB_PASSWORD:XJTUse-RAC@2025} # 数据库密码默认为空
   mvc:
     format:
       date: yyyy-MM-dd
@@ -21,7 +21,7 @@ server:
   servlet:
     encoding:
       charset: utf-8
-  port: ${SERVER_PORT:8080}
+  port: ${SERVER_PORT:8090}
 
 mybatis:
   mapper-locations: classpath:/mybatis/mapper/*.xml, classpath:/mybatis/mapper/extend/*.xml

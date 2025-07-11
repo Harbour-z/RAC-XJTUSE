@@ -1,0 +1,68 @@
+name: 部署后端至云服务器
+
+# 触发条件：推送到 main 分支时触发
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      # Step 1: 拉取后端代码
+      - name: 拉取代码
+        uses: actions/checkout@v4
+
+      # Step 2: 配置 JDK（后端编译依赖）
+      - name: 配置 JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: 21
+          distribution: "temurin"  # OpenJDK 发行版
+          cache: "maven"  # 缓存 Maven 依赖
+
+      # Step 3: 编译打包（生成 JAR 文件）
+      - name: Maven 打包
+        run: mvn clean package -DskipTests -Pprod  # -Pprod 激活生产环境配置
+
+      # Step 4: 查找 JAR 文件路径（处理版本号变动）
+      - name: 获取 JAR 文件路径
+        id: find_jar
+        run: echo "JAR_FILE=$(find target -name '*.jar' | head -n 1)" >> $GITHUB_ENV
+
+      # Step 5: 通过 SSH 将 JAR 传输到服务器
+      - name: 传输 JAR 至服务器
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          port: ${{ secrets.SERVER_PORT }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SERVER_SSH_KEY }}
+          source: ${{ env.JAR_FILE }}  # 本地 JAR 路径
+          target: "/opt/backend"  # 服务器后端目录
+          overwrite: true
+
+      # Step 6: 启动后端服务（停止旧进程，启动新进程）
+      - name: 启动后端服务
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          port: ${{ secrets.SERVER_PORT }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SERVER_SSH_KEY }}
+          script: |
+            # 停止旧服务（如果存在）
+            PID=$(ps -ef | grep 'backend.jar' | grep -v grep | awk '{print $2}')
+            if [ -n "$PID" ]; then
+              echo "停止旧服务（PID: $PID）"
+              kill -9 $PID
+              sleep 2  # 等待进程退出
+            fi
+
+            # 启动新服务（后台运行，日志输出到 nohup.out）
+            cd /opt/backend
+            mv *.jar backend.jar  # 重命名 JAR 为固定名称（避免版本号问题）
+            nohup java -jar backend.jar --spring.profiles.active=prod > nohup.out 2>&1 &
+            echo "后端服务启动成功，端口：8080"
+            # 查看启动日志（可选，用于调试）
+            # tail -n 20 nohup.out
