@@ -3,6 +3,8 @@ package com.example.mybatisplusdemo.model.dto;
 import com.example.mybatisplusdemo.model.domain.Shop;
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 public class ShopDTO {
 //  店面注册的前端传参
@@ -16,7 +18,7 @@ public class ShopDTO {
   private String username;
   private String license;//许可证图片
   private String health ;//卫生许可证
-  private String[] otherPermit;//其它许可证
+  private List<String> otherPermit;//其它许可证
 
 
   private Long avgRating;

@@ -18,6 +18,7 @@
         <result column="create_time" property="createTime" />
         <result column="update_time" property="updateTime" />
         <result column="price_range" property="priceRange" />
+        <result column="category" property="category" />
         <result column="tag" property="tag" />
     </resultMap>
 
