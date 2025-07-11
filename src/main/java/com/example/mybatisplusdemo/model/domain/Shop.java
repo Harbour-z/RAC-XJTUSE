@@ -35,7 +35,7 @@ public class Shop implements Serializable {
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
-        @ApiModelProperty(value = "店铺分类")
+        @ApiModelProperty(value = "店铺分类Id")
     @TableField("category_id")
     private Integer categoryId;
 
@@ -88,6 +88,10 @@ public class Shop implements Serializable {
         @ApiModelProperty(value = "商家标签")
     @TableField("tag")
     private String tag;
+
+    @ApiModelProperty(value = "店铺分类")
+    @TableField("category")
+    private String category;
 
 
 }
